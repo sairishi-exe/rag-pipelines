@@ -4,13 +4,23 @@
 # markdown notes (internal use only)
 markdowns/
 
-# data — keep folder structure but not contents
+# data — ignore contents but keep folder structure via .gitkeep
 data/raw/training13b.json
 data/raw/oa_non_comm_use_pdf.csv
-data/raw/pdfs/
-data/processed/
-data/cache/
-data/indexes/
+data/raw/pdfs/*
+!data/raw/pdfs/.gitkeep
+
+data/processed/**/*
+!data/processed/images/.gitkeep
+!data/processed/ocr/.gitkeep
+
+data/cache/*
+!data/cache/.gitkeep
+
+data/indexes/bm25/*
+!data/indexes/bm25/.gitkeep
+data/indexes/colpali/*
+!data/indexes/colpali/.gitkeep
 
 # Python
 __pycache__/
