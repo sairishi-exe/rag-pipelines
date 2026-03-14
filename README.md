@@ -89,10 +89,21 @@ pip install -r requirements.txt
 ```
 
 ### 2) Download BioASQ training data
-Place `training13b.json` under:
+Register and download `BioASQ-training13b.zip` from [bioasq.org](http://bioasq.org), then place the training13b.json file at:
 ```
 data/raw/training13b.json
 ```
+
+### 3) Download PMC OA PDF file list
+Download the non-commercial PDF file list from NCBI's FTP server:
+```
+https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_non_comm_use_pdf.csv
+```
+Place it at:
+```
+data/raw/oa_non_comm_use_pdf.csv
+```
+This file is used by `filter_dataset.py` to confirm which PMC articles have a directly downloadable PDF.
 
 ## Run Instructions
 
