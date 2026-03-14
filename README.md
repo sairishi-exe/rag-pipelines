@@ -111,13 +111,13 @@ This file is used by `filter_dataset.py` to confirm which PMC articles have a di
 ```bash
 python -m src.prepare_data.build_dataset
 ```
-Outputs: `data/cache/dataframe_cache.json`, `data/cache/pmid_to_pmcid_map.json`
+Outputs: `data/cache/dataframe_cache.json`, `data/cache/document_id_map.json`
 
-### B) Filter subset (~500 pages, high OA ratio)
+### B) Filter subset (~100 - 120 documents, high OA ratio)
 ```bash
 python -m src.prepare_data.filter_dataset
 ```
-Output: `data/cache/dataframe_cache.json` (filtered in-place)
+Output: `data/cache/dataframe_subset_cache.json`, `data/cache/document_id_subset.json`
 
 ### C) Download PMC PDFs
 ```bash
