@@ -1,0 +1,19 @@
+# virtual environment
+.venv/
+
+# markdown notes (internal use only)
+markdowns/
+
+# data — keep folder structure but not contents
+data/raw/training13b.json
+data/raw/oa_non_comm_use_pdf.csv
+data/raw/pdfs/
+data/processed/
+data/cache/
+data/indexes/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
