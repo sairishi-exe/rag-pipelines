@@ -10,8 +10,11 @@ data/raw/oa_non_comm_use_pdf.csv
 data/raw/pdfs/*
 !data/raw/pdfs/.gitkeep
 
-data/processed/**/*
+data/processed/**
+!data/processed/.gitkeep
+!data/processed/images/
 !data/processed/images/.gitkeep
+!data/processed/ocr/
 !data/processed/ocr/.gitkeep
 
 data/cache/*
