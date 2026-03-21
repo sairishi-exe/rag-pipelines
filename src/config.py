@@ -11,7 +11,7 @@ CACHE_DIR = "data/cache"
 PDF_DIR = "data/raw/pdfs"
 
 # This directory is used to store the processed data.
-# IMAGES_DIR = "data/processed/images"
+IMAGES_DIR = "data/processed/images"
 # OCR_DIR = "data/processed/ocr"
 # INDEXES_DIR = "data/indexes"
 
