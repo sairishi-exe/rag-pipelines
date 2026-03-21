@@ -12,7 +12,7 @@ PDF_DIR = "data/raw/pdfs"
 
 # This directory is used to store the processed data.
 IMAGES_DIR = "data/processed/images"
-# OCR_DIR = "data/processed/ocr"
+OCR_DIR = "data/processed/ocr"
 # INDEXES_DIR = "data/indexes"
 
 # Target corpus size to download

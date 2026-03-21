@@ -74,16 +74,18 @@ project/
 
 ### 1) Create environment and install dependencies
 
+> **Python 3.9–3.12 required** (PaddlePaddle does not support 3.13+)
+
 Mac/Linux:
 ```bash
-python -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
 Windows (PowerShell):
 ```bash
-python -m venv .venv
+python3.12 -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 ```
