@@ -25,6 +25,15 @@ data/indexes/bm25/*
 data/indexes/colpali/*
 !data/indexes/colpali/.gitkeep
 
+# test 
+data/test/
+
+# personal notes
+my_notes.txt
+
+# claude 
+.claude/
+
 # Python
 __pycache__/
 *.pyc

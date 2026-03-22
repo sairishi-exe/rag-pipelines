@@ -13,6 +13,9 @@ PDF_DIR = "data/raw/pdfs"
 # This directory is used to store the processed data.
 IMAGES_DIR = "data/processed/images"
 OCR_DIR = "data/processed/ocr"
+CHUNKS_PATH = "data/processed/chunks.jsonl"
+CHUNK_SIZE = 400       # words per chunk
+CHUNK_OVERLAP = 100    # overlap in words
 # INDEXES_DIR = "data/indexes"
 
 # Target corpus size to download
