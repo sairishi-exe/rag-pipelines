@@ -9,6 +9,7 @@ from src.config import CHUNKS_PATH, BM25_INDEX_DIR, VERBOSE
 
 BM25_INDEX_PATH = os.path.join(BM25_INDEX_DIR, "bm25_index.pkl")
 
+# Rebuild index if rebuild chunks since using implicit mapping of position 0 in scores = line 0 in chunks.jsonl
 
 def tokenize(text: str) -> list[str]:
     """Lowercase alphanumeric tokenization. Used at both build and query time."""
