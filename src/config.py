@@ -16,7 +16,7 @@ OCR_DIR = "data/processed/ocr"
 CHUNKS_PATH = "data/processed/chunks.jsonl"
 CHUNK_SIZE = 400       # words per chunk
 CHUNK_OVERLAP = 100    # overlap in words
-# INDEXES_DIR = "data/indexes"
+BM25_INDEX_DIR = "data/indexes/bm25"
 
 # Target corpus size to download
 TARGET_ARTICLES = 120

@@ -31,7 +31,10 @@ data/test/
 # personal notes
 my_notes.txt
 
-# claude 
+# direnv
+.envrc
+
+# claude
 .claude/
 
 # Python
