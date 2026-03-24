@@ -8,6 +8,7 @@ def retrieve_pipeline_a(query: str, chunks: list[dict], bm25, top_k: int = 5) ->
     Score all chunks against the query using BM25 and return the top-K.
     Caller is responsible for loading bm25 and chunks once and passing them in.
     """
+    # tokenize exact way tokenized corpus
     tokens = tokenize(query)
     scores = bm25.get_scores(tokens)
 
