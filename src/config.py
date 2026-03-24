@@ -18,6 +18,13 @@ CHUNK_SIZE = 400       # words per chunk
 CHUNK_OVERLAP = 100    # overlap in words
 BM25_INDEX_DIR = "data/indexes/bm25"
 
+# Retrieval
+CONTEXT_TOP_K = 5  # number of chunks to retrieve and send to LLM
+
+# LLM
+OLLAMA_MODEL = "llama3.1:8b"
+OLLAMA_URL = "http://localhost:11434/api/generate"
+
 # Target corpus size to download
 TARGET_ARTICLES = 120
 VERBOSE = True

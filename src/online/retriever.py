@@ -12,6 +12,7 @@ def retrieve_pipeline_a(query: str, chunks: list[dict], bm25, top_k: int = 5) ->
     tokens = tokenize(query)
     scores = bm25.get_scores(tokens)
 
+    # sort in reverse and return top k indices that map to chunks
     top_indices = np.argsort(scores)[::-1][:top_k]
 
     results = []
