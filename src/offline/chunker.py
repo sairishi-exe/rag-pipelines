@@ -1,7 +1,9 @@
 import json
 import os
+import sqlite3
 
-from src.config import OCR_DIR, CHUNKS_PATH, CHUNK_SIZE, CHUNK_OVERLAP, VERBOSE
+from src.config import OCR_DIR, CHUNKS_PATH, CHUNK_SIZE, CHUNK_OVERLAP, VERBOSE, DB_PATH
+from src.db.init_db import init_db
 
 # minimum new words the last chunk must contribute; otherwise merge into previous
 MIN_TAIL_WORDS = 50
@@ -103,10 +105,25 @@ def chunk_document(
             "pmcid": pmcid,
             "page_start": word_page[start],
             "page_end": word_page[end - 1],
+            "chunk_index": idx,
             "text": " ".join(all_words[start:end]),
         })
 
     return chunks
+
+
+def insert_chunks_to_db(chunks: list[dict]) -> None:
+    """Insert all chunks into SQLite. Wipes existing data first for idempotency."""
+    init_db()
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("DELETE FROM chunks")
+    conn.executemany(
+        "INSERT INTO chunks (chunk_id, pmcid, page_start, page_end, chunk_index, text) "
+        "VALUES (:chunk_id, :pmcid, :page_start, :page_end, :chunk_index, :text)",
+        chunks
+    )
+    conn.commit()
+    conn.close()
 
 
 def main():
@@ -149,8 +166,12 @@ def main():
         for chunk in all_chunks:
             f.write(json.dumps(chunk) + "\n")
 
+    # Step 5: insert into SQLite
+    insert_chunks_to_db(all_chunks)
+
     print(f"\nChunked: {processed}  |  Failed: {failed}")
     print(f"Total chunks: {len(all_chunks)}  |  Output: {CHUNKS_PATH}")
+    print(f"SQLite: {DB_PATH}")
 
 
 if __name__ == "__main__":

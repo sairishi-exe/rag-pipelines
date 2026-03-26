@@ -1,8 +1,8 @@
 # virtual environment
 .venv/
 
-# markdown notes (internal use only)
-markdowns/
+# sai's notes (internal use only)
+notes/
 
 # data — ignore contents but keep folder structure via .gitkeep
 data/raw/training13b.json
@@ -24,18 +24,14 @@ data/indexes/bm25/*
 !data/indexes/bm25/.gitkeep
 data/indexes/colpali/*
 !data/indexes/colpali/.gitkeep
+data/indexes/pipeline.db
 
 # test 
 data/test/
 
-# personal notes
+# khush's personal notes
 my_notes.txt
 
-# direnv
-.envrc
-
-# claude
-.claude/
 
 # Python
 __pycache__/

@@ -7,7 +7,9 @@ from paddleocr import PaddleOCR
 from src.config import IMAGES_DIR, OCR_DIR, VERBOSE
 
 # abort if process memory exceeds this (in GB)
-MAX_MEMORY_GB = 20
+# NOTE: changed from 20GB to 14GB so that smaller RAM machines can run the script
+# NOTE: Course staff can change according to their machine's RAM
+MAX_MEMORY_GB = 14
 
 
 def init_ocr() -> PaddleOCR:
