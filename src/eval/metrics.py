@@ -6,7 +6,7 @@ from rouge_score import rouge_scorer
 _scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=True)
 
 
-# ── Answer quality metrics ──────────────────────────────────────────
+### Answer quality metrics
 
 def exact_match(prediction: str, exact_answers: list[str]) -> int:
     """
@@ -66,3 +66,26 @@ def bert_score(predictions: list[str], ideal_answers: list[list[str] | str]) -> 
         })
 
     return all_f1s
+
+
+### Retrieval quality metrics
+
+def hit_rate_at_k(retrieved_pmcids: list[str], gold_pmcids: list[str], k: int) -> int:
+    """
+    Hit Rate@K: did at least one gold PMCID appear in the top-K retrieved chunks?
+
+    Returns 1 if yes, 0 if no. Evaluated at K=1 and K=3.
+    """
+    top_k = set(retrieved_pmcids[:k])
+    return int(bool(top_k & set(gold_pmcids)))
+
+
+def recall_at_k(retrieved_pmcids: list[str], gold_pmcids: list[str], k: int) -> float:
+    """
+    Recall@K: what fraction of gold PMCIDs were found in the top-K retrieved chunks?
+    
+    Returns 0.0–1.0. Evaluated at K=1 and K=3.
+    """
+    top_k = set(retrieved_pmcids[:k])
+    found = len(top_k & set(gold_pmcids))
+    return found / len(gold_pmcids)
