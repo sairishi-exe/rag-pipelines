@@ -2,21 +2,38 @@ import json
 import os
 import pickle
 import re
+import sqlite3
 
 from rank_bm25 import BM25Okapi
 
-from src.config import CHUNKS_PATH, BM25_INDEX_DIR, VERBOSE
+from src.config import CHUNKS_PATH, BM25_INDEX_DIR, DB_PATH, VERBOSE
 
 BM25_INDEX_PATH = os.path.join(BM25_INDEX_DIR, "bm25_index.pkl")
 
-# Rebuild index if rebuild chunks since using implicit mapping of position 0 in scores = line 0 in chunks.jsonl
+# Rebuild index if rebuild chunks since BM25 position = global_index in SQLite
+
 
 def tokenize(text: str) -> list[str]:
     """Lowercase alphanumeric tokenization. Used at both build and query time."""
     return re.findall(r'[a-z0-9]+', text.lower())
 
 
-def load_chunks(chunks_path: str) -> list[dict]:
+def load_chunks_from_db(db_path: str) -> list[dict]:
+    """
+    Load text and pmcid from SQLite, ordered by global_index.
+    This order must match BM25 positional indexing.
+    """
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute(
+        "SELECT pmcid, text FROM chunks ORDER BY global_index"
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+# Backup: load chunks from JSONL (not used by pipeline, kept for manual inspection)
+def load_chunks_from_jsonl(chunks_path: str) -> list[dict]:
     """Load all chunk records from a JSONL file."""
     chunks = []
     with open(chunks_path) as f:
@@ -45,14 +62,14 @@ def load_index(index_path: str = BM25_INDEX_PATH) -> BM25Okapi:
 
 
 def main():
-    # Step 1: load chunks
-    if not os.path.isfile(CHUNKS_PATH):
-        print(f"Chunks file not found: {CHUNKS_PATH}. Run chunker first.")
+    # Step 1: load chunks from SQLite
+    if not os.path.isfile(DB_PATH):
+        print(f"Database not found: {DB_PATH}. Run chunker first.")
         return
 
-    chunks = load_chunks(CHUNKS_PATH)
+    chunks = load_chunks_from_db(DB_PATH)
     if not chunks:
-        print("No chunks found. Run chunker first.")
+        print("No chunks found in database. Run chunker first.")
         return
 
     # Step 2: build index
@@ -62,6 +79,7 @@ def main():
     bm25 = build_index(chunks)
     save_index(bm25, BM25_INDEX_PATH)
 
+    # check stats
     unique_docs = len(set(c["pmcid"] for c in chunks))
     print(f"\nChunks indexed: {len(chunks)}  |  Documents: {unique_docs}")
     print(f"Index saved to: {BM25_INDEX_PATH}")

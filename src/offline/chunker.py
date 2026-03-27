@@ -17,18 +17,20 @@ def get_ocr_dirs(ocr_dir: str) -> list[str]:
     )
 
 
-def is_already_chunked(chunks_path: str, ocr_pmcids: list[str]) -> bool:
+def is_already_chunked(ocr_pmcids: list[str]) -> bool:
     """
-    Check if chunks.jsonl exists and contains chunks for every OCR'd PMCID.
-    Returns False if the file is missing or any PMCID is not covered.
+    Check if SQLite chunks table contains chunks for every OCR'd PMCID.
+    Returns False if the DB is missing or any PMCID is not covered.
     """
-    if not os.path.isfile(chunks_path):
+    if not os.path.isfile(DB_PATH):
         return False
-    chunked_pmcids = set()
-    with open(chunks_path) as f:
-        for line in f:
-            rec = json.loads(line)
-            chunked_pmcids.add(rec["pmcid"])
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        rows = conn.execute("SELECT DISTINCT pmcid FROM chunks").fetchall()
+        conn.close()
+    except sqlite3.OperationalError:
+        return False
+    chunked_pmcids = {r[0] for r in rows}
     return all(pmcid in chunked_pmcids for pmcid in ocr_pmcids)
 
 
@@ -112,18 +114,18 @@ def chunk_document(
     return chunks
 
 
-def insert_chunks_to_db(chunks: list[dict]) -> None:
-    """Insert all chunks into SQLite. Wipes existing data first for idempotency."""
-    init_db()
-    conn = sqlite3.connect(DB_PATH)
-    conn.execute("DELETE FROM chunks")
+def insert_chunks_to_db(chunks: list[dict], conn: sqlite3.Connection, global_offset: int) -> int:
+    """Insert a document's chunks into SQLite with global_index for BM25 positional mapping.
+    Returns the next global_offset to use for the following document."""
+    for i, chunk in enumerate(chunks):
+        chunk["global_index"] = global_offset + i
     conn.executemany(
-        "INSERT INTO chunks (chunk_id, pmcid, page_start, page_end, chunk_index, text) "
-        "VALUES (:chunk_id, :pmcid, :page_start, :page_end, :chunk_index, :text)",
+        "INSERT INTO chunks (chunk_id, pmcid, page_start, page_end, chunk_index, global_index, text) "
+        "VALUES (:chunk_id, :pmcid, :page_start, :page_end, :chunk_index, :global_index, :text)",
         chunks
     )
     conn.commit()
-    conn.close()
+    return global_offset + len(chunks)
 
 
 def main():
@@ -133,15 +135,23 @@ def main():
         print("No OCR output found. Run OCR first.")
         return
 
-    # Step 2: idempotency check
-    if is_already_chunked(CHUNKS_PATH, pmcids):
-        print(f"Chunking already complete ({CHUNKS_PATH} covers all {len(pmcids)} documents). Skipping.")
+    # Step 2: idempotency check (uses SQLite as source of truth)
+    if is_already_chunked(pmcids):
+        print(f"Chunking already complete (SQLite covers all {len(pmcids)} documents). Skipping.")
         return
 
-    all_chunks = []
-    processed, failed = 0, 0
+    # Step 3: wipe and prepare DB for fresh insert
+    # on partial failure, idempotency check will detect missing PMCIDs and re-run
+    init_db()
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("DELETE FROM chunks")
+    conn.commit()
 
-    # Step 3: chunk each document
+    processed, failed, total_chunks = 0, 0, 0
+    global_offset = 0  # tracks next global_index across documents (doc1: 0-15, doc2: 16-34, ...)
+    all_chunks_for_jsonl = []  # accumulate for JSONL backup only
+
+    # Step 4: chunk each document and insert to DB immediately (no large in-memory list for DB)
     for i, pmcid in enumerate(pmcids, 1):
         pages = read_document_pages(OCR_DIR, pmcid)
 
@@ -152,7 +162,10 @@ def main():
             continue
 
         chunks = chunk_document(pmcid, pages, CHUNK_SIZE, CHUNK_OVERLAP)
-        all_chunks.extend(chunks)
+        # insert this document's chunks and advance global_offset
+        global_offset = insert_chunks_to_db(chunks, conn, global_offset)
+        all_chunks_for_jsonl.extend(chunks)
+        total_chunks += len(chunks)
         processed += 1
 
         if VERBOSE:
@@ -160,18 +173,17 @@ def main():
             print(f"  [{i}/{len(pmcids)}] {pmcid} -- {len(pages)} pages, "
                   f"{total_words} words, {len(chunks)} chunks")
 
-    # Step 4: write all chunks to JSONL
+    conn.close()
+
+    # Step 5: write JSONL backup (not used by pipeline, kept for debugging/inspection)
     os.makedirs(os.path.dirname(CHUNKS_PATH), exist_ok=True)
     with open(CHUNKS_PATH, "w") as f:
-        for chunk in all_chunks:
+        for chunk in all_chunks_for_jsonl:
             f.write(json.dumps(chunk) + "\n")
 
-    # Step 5: insert into SQLite
-    insert_chunks_to_db(all_chunks)
-
     print(f"\nChunked: {processed}  |  Failed: {failed}")
-    print(f"Total chunks: {len(all_chunks)}  |  Output: {CHUNKS_PATH}")
-    print(f"SQLite: {DB_PATH}")
+    print(f"Total chunks: {total_chunks}  |  SQLite: {DB_PATH}")
+    print(f"JSONL backup: {CHUNKS_PATH}")
 
 
 if __name__ == "__main__":
