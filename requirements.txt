@@ -7,3 +7,7 @@ psutil
 paddlepaddle>=3.0,<4.0
 paddleocr>=3.0,<4.0
 rank-bm25
+qdrant-client
+transformers
+torch
+Pillow

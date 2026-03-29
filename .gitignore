@@ -22,8 +22,8 @@ data/cache/*
 
 data/indexes/bm25/*
 !data/indexes/bm25/.gitkeep
-data/indexes/colpali/*
-!data/indexes/colpali/.gitkeep
+data/indexes/qdrant/*
+!data/indexes/qdrant/.gitkeep
 data/indexes/pipeline.db
 
 # test 

@@ -40,6 +40,25 @@ def fetch_chunks_by_positions(positions: list[int]) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+def fetch_chunk_indices_by_pages(pages: set[tuple[str, int]]) -> list[int]:
+    """Map (pmcid, page_num) pairs to chunk global_index values.
+
+    Used by Pipeline B: ColPali returns top pages, this finds which
+    chunks overlap those pages so BM25 can score just the candidates.
+    """
+    conn = sqlite3.connect(DB_PATH)
+    indices = []
+    for pmcid, page_num in pages:
+        rows = conn.execute(
+            "SELECT global_index FROM chunks "
+            "WHERE pmcid = ? AND page_start <= ? AND page_end >= ?",
+            (pmcid, page_num, page_num),
+        ).fetchall()
+        indices.extend(r[0] for r in rows)
+    conn.close()
+    return list(set(indices))
+
+
 if __name__ == "__main__":
     init_db()
     print(f"Database ready: {DB_PATH}")
