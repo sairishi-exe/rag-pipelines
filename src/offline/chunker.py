@@ -2,7 +2,7 @@ import json
 import os
 import sqlite3
 
-from src.config import OCR_DIR, CHUNKS_PATH, CHUNK_SIZE, CHUNK_OVERLAP, VERBOSE, DB_PATH
+from src.config import OCR_DIR, CACHE_DIR, CHUNK_SIZE, CHUNK_OVERLAP, VERBOSE, DB_PATH
 from src.db.init_db import init_db
 
 # minimum new words the last chunk must contribute; otherwise merge into previous
@@ -114,6 +114,16 @@ def chunk_document(
     return chunks
 
 
+def snapshot_to_cache(chunks: list[dict]) -> str:
+    """Write all chunks to a JSONL file in cache dir for manual inspection."""
+    path = os.path.join(CACHE_DIR, "chunks.jsonl")
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    with open(path, "w") as f:
+        for chunk in chunks:
+            f.write(json.dumps(chunk) + "\n")
+    return path
+
+
 def insert_chunks_to_db(chunks: list[dict], conn: sqlite3.Connection, global_offset: int) -> int:
     """Insert a document's chunks into SQLite with global_index for BM25 positional mapping.
     Returns the next global_offset to use for the following document."""
@@ -175,15 +185,11 @@ def main():
 
     conn.close()
 
-    # Step 5: write JSONL backup (not used by pipeline, kept for debugging/inspection)
-    os.makedirs(os.path.dirname(CHUNKS_PATH), exist_ok=True)
-    with open(CHUNKS_PATH, "w") as f:
-        for chunk in all_chunks_for_jsonl:
-            f.write(json.dumps(chunk) + "\n")
+    cache_path = snapshot_to_cache(all_chunks_for_jsonl)
 
     print(f"\nChunked: {processed}  |  Failed: {failed}")
     print(f"Total chunks: {total_chunks}  |  SQLite: {DB_PATH}")
-    print(f"JSONL backup: {CHUNKS_PATH}")
+    print(f"JSONL snapshot: {cache_path}")
 
 
 if __name__ == "__main__":

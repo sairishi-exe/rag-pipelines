@@ -1,4 +1,3 @@
-import json
 import os
 import pickle
 import re
@@ -6,7 +5,7 @@ import sqlite3
 
 from rank_bm25 import BM25Okapi
 
-from src.config import CHUNKS_PATH, BM25_INDEX_DIR, DB_PATH, VERBOSE
+from src.config import BM25_INDEX_DIR, DB_PATH, VERBOSE
 
 BM25_INDEX_PATH = os.path.join(BM25_INDEX_DIR, "bm25_index.pkl")
 
@@ -31,15 +30,6 @@ def load_chunks_from_db(db_path: str) -> list[dict]:
     conn.close()
     return [dict(r) for r in rows]
 
-
-# Backup: load chunks from JSONL (not used by pipeline, kept for manual inspection)
-def load_chunks_from_jsonl(chunks_path: str) -> list[dict]:
-    """Load all chunk records from a JSONL file."""
-    chunks = []
-    with open(chunks_path) as f:
-        for line in f:
-            chunks.append(json.loads(line))
-    return chunks
 
 
 def build_index(chunks: list[dict]) -> BM25Okapi:
