@@ -89,3 +89,27 @@ def recall_at_k(retrieved_pmcids: list[str], gold_pmcids: list[str], k: int) -> 
     top_k = set(retrieved_pmcids[:k])
     found = len(top_k & set(gold_pmcids))
     return found / len(gold_pmcids)
+
+
+### Page-level retrieval metrics (Pipeline B ColPali analysis)
+
+def page_hit_rate(page_hits: list[dict], gold_pmcids: list[str]) -> int:
+    """
+    Answers: Did ColPali's top-P pages include at least one page from a gold PMCID?
+    page_hits: list of {"pmcid": ..., "page_num": ..., "score": ...} from Qdrant.
+
+    Returns 1 if yes, 0 if no.
+    """
+    retrieved_pmcids = {h["pmcid"] for h in page_hits}
+    return int(bool(retrieved_pmcids & set(gold_pmcids)))
+
+
+def page_recall(page_hits: list[dict], gold_pmcids: list[str]) -> float:
+    """
+    Answers: What fraction of gold PMCIDs appear in ColPali's top-P pages?
+    
+    Returns 0.0–1.0.
+    """
+    retrieved_pmcids = {h["pmcid"] for h in page_hits}
+    found = len(retrieved_pmcids & set(gold_pmcids))
+    return found / len(gold_pmcids)
