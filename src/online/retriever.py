@@ -35,9 +35,12 @@ def retrieve_pipeline_b(
     qdrant_client,
     top_p: int = 20,
     top_k: int = 5,
-) -> list[dict]:
-    """ColPali MaxSim -> page filter -> BM25 re-rank on candidate chunks."""
-
+) -> tuple[list[dict], list[dict]]:
+    """
+    ColPali pre-filters pages, then BM25 re-ranks the candidate chunks.
+    Uses global_index to fetch only the needed chunks from SQLite.
+    Returns (chunks, page_hits) — page_hits exposed for page-level eval metrics.
+    """
     # 1. Qdrant MaxSim: find top-P pages
     page_hits = query_pages(qdrant_client, query_embeddings, top_p)
     pages = {(h["pmcid"], h["page_num"]) for h in page_hits}
@@ -45,20 +48,23 @@ def retrieve_pipeline_b(
     # 2. Map pages -> chunk global_indices via SQLite
     candidate_idx = fetch_chunk_indices_by_pages(pages)
     if not candidate_idx:
-        return []
+        return [], page_hits
 
     # 3. BM25 score only the candidate chunks
     tokens = tokenize(query)
-    all_scores = bm25.get_scores(tokens)
-    scored = {i: float(all_scores[i]) for i in candidate_idx}
+    scores = bm25.get_scores(tokens)
+    candidate_scores = {int(i): float(scores[i]) for i in candidate_idx}
 
     # 4. Top-K from candidates
-    top_indices = sorted(scored, key=scored.get, reverse=True)[:top_k]
-    top_scores = {i: scored[i] for i in top_indices}
+    top_indices = sorted(candidate_scores, key=candidate_scores.get, reverse=True)[:top_k]
+    top_scores = {i: candidate_scores[i] for i in top_indices}
 
+    # fetch only the top-K chunks from SQLite
     chunks = fetch_chunks_by_positions(top_indices)
+
+    # attach scores and sort by score descending
     for chunk in chunks:
         chunk["score"] = top_scores[chunk["global_index"]]
     chunks.sort(key=lambda c: c["score"], reverse=True)
 
-    return chunks
+    return chunks, page_hits
