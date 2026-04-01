@@ -6,6 +6,7 @@ OA_PDF_CSV = "data/raw/oa_non_comm_use_pdf.csv"
 
 # This directory is used to cache intermediate dataframes and mappings.
 CACHE_DIR = "data/cache"
+EVAL_DIR = "data/eval"
 
 # This directory is used to store the downloaded PDFs.
 PDF_DIR = "data/raw/pdfs"
