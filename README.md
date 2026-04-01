@@ -27,9 +27,10 @@ We evaluate a cost-constrained RAG scenario: a team with a text-only LLM, a stan
 4) BM25 retrieval on filtered chunks → fill same fixed context budget → LLM → answer
 
 ## Metrics
-- Answer quality: ROUGE-L, BERTScore (prediction vs ground-truth answer)
+- Answer quality: Exact Match (prediction vs exact_answer), ROUGE-L (prediction vs ideal_answer), BERTScore (prediction vs ideal_answer)
 - Retrieval quality: Hit Rate@1 / Hit Rate@3, Recall@1 / Recall@3
-- Efficiency: latency and reduction in search space (chunks scanned)
+- Efficiency: average latency per query
+- ColPali analysis: Page Hit Rate, Page Recall (Pipeline B only)
 
 ## Folder Structure
 
@@ -37,6 +38,7 @@ We evaluate a cost-constrained RAG scenario: a team with a text-only LLM, a stan
 project/
   README.md
   requirements.txt
+  docker-compose.yml      # Qdrant vector DB for ColPali embeddings
   src/
     prepare_data/
       build_dataset.py    # load BioASQ, resolve PMIDs → PMCIDs, cache
@@ -44,16 +46,19 @@ project/
       download_corpus.py  # download PMC PDFs
     offline/
       pdf_to_images.py    # rasterize PDFs to per-page images
-      ocr.py              # layout-aware OCR
-      chunker.py          # split OCR text into fixed-token overlapping chunks
-      colpali.py          # ColPali page embeddings
-      bm25.py             # BM25 index builder
+      ocr.py              # layout-aware OCR (PaddleOCR)
+      chunker.py          # split OCR text into fixed-token overlapping chunks → SQLite
+      colpali.py          # ColPali page embeddings → Qdrant
+      bm25.py             # BM25 index builder (reads from SQLite)
     online/
       retriever.py        # query-time retrieval (Pipeline A and B)
-      llm.py              # LLM answerer
+      llm.py              # LLM answerer (Ollama / Llama 3.1 8B)
+    db/
+      init_db.py          # SQLite schema + chunk queries
+      qdrant_db.py        # Qdrant collection + ColPali vector queries
     eval/
-      eval.py             # run evaluation
-      metrics.py          # ROUGE-L, BERTScore, Hit Rate, Recall
+      eval.py             # run evaluation (both pipelines, all metrics)
+      metrics.py          # Exact Match, ROUGE-L, BERTScore, Hit Rate, Recall
     utils.py              # shared helpers (cache_data, print_example_row)
   data/
     raw/
@@ -62,11 +67,11 @@ project/
     processed/
       images/             # per-page images: {pmcid}/p0001.png
       ocr/                # per-page OCR text
-      chunks.jsonl
-    cache/                # intermediate DataFrames and mappings
+    cache/                # intermediate DataFrames, eval results (CSV/JSON)
     indexes/
-      bm25/
-      colpali/
+      bm25/               # BM25 pickle index
+      qdrant/             # Qdrant vector DB storage (Docker volume)
+      pipeline.db         # SQLite chunk store
 ```
 
 
@@ -126,6 +131,31 @@ Output: `data/cache/dataframe_subset_cache.json`, `data/cache/document_id_subset
 python -m src.prepare_data.download_corpus
 ```
 Output: `data/raw/pdfs/{pmcid}.pdf`
+
+### D) Offline preprocessing (PDF → images → OCR → chunks → indexes)
+```bash
+python -m src.offline.pdf_to_images    # PDFs → per-page PNGs
+python -m src.offline.ocr              # PNGs → per-page OCR text
+python -m src.offline.chunker          # OCR text → SQLite chunks + JSONL backup
+python -m src.offline.bm25             # SQLite chunks → BM25 index
+```
+
+### E) ColPali page embeddings (Pipeline B only)
+Requires Docker for Qdrant:
+```bash
+docker compose up -d                   # start Qdrant vector DB
+python -m src.offline.colpali          # page images → ColPali embeddings → Qdrant
+```
+
+### F) Run evaluation
+Requires Ollama (with llama3.1:8b) and Qdrant running:
+```bash
+python -m src.eval.eval
+```
+Outputs:
+- Terminal comparison table
+- `data/cache/eval_results.csv` — for Google Sheets / reports
+- `data/cache/eval_results.json` — per-question results for analysis
 
 
 ## Authors

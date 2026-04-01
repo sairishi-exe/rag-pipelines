@@ -11,3 +11,5 @@ qdrant-client
 transformers
 torch
 Pillow
+rouge-score
+bert-score
