@@ -64,41 +64,46 @@ def preflight_checks():
 ### Per-question evaluation
 
 def run_pipeline_a(query, bm25):
-    """Run Pipeline A on a single question. Returns (prediction, retrieved_pmcids, latency)."""
-    start = time.time()
+    """Run Pipeline A on a single question.
+    Returns (prediction, retrieved_pmcids, retrieval_latency, llm_latency)."""
+    # retrieval: BM25 over full corpus
+    t0 = time.time()
     chunks = retrieve_pipeline_a(query, bm25, CONTEXT_TOP_K)
+    retrieval_latency = time.time() - t0
 
+    # LLM answer
+    t1 = time.time()
     try:
         prediction = answer_question(query, chunks)
     except Exception:
         prediction = "unanswerable"
+    llm_latency = time.time() - t1
 
-    latency = time.time() - start
     retrieved_pmcids = [c["pmcid"] for c in chunks]
-    return prediction, retrieved_pmcids, latency
+    return prediction, retrieved_pmcids, retrieval_latency, llm_latency
 
 
 def run_pipeline_b(query, bm25, model, processor, qdrant_client):
-    """Run Pipeline B on a single question. Returns (prediction, retrieved_pmcids, page_hits, latency)."""
-    start = time.time()
-
-    # ColPali query embedding
+    """Run Pipeline B on a single question.
+    Returns (prediction, retrieved_pmcids, page_hits, retrieval_latency, llm_latency)."""
+    # retrieval: ColPali embedding + Qdrant query + BM25 re-rank on candidates
+    t0 = time.time()
     query_embeddings = embed_query(model, processor, query)
-
-    # retrieve chunks via ColPali pre-filter + BM25 re-rank
-    # also returns page_hits for page-level eval metrics
     chunks, page_hits = retrieve_pipeline_b(
         query, bm25, query_embeddings, qdrant_client, TOP_P_PAGES, CONTEXT_TOP_K
     )
+    retrieval_latency = time.time() - t0
 
+    # LLM answer
+    t1 = time.time()
     try:
         prediction = answer_question(query, chunks)
     except Exception:
         prediction = "unanswerable"
+    llm_latency = time.time() - t1
 
-    latency = time.time() - start
     retrieved_pmcids = [c["pmcid"] for c in chunks]
-    return prediction, retrieved_pmcids, page_hits, latency
+    return prediction, retrieved_pmcids, page_hits, retrieval_latency, llm_latency
 
 
 ### Output formatting
@@ -125,9 +130,15 @@ def print_table(results_a, results_b, num_questions):
     print()
 
     print("Efficiency")
-    lat_a = f"{results_a['avg_latency']:.1f}s"
-    lat_b = f"{results_b['avg_latency']:.1f}s"
-    print(f"  {'Avg Latency':18s}{lat_a:>20s}{lat_b:>20s}")
+    ret_a = f"{results_a['avg_retrieval_latency']:.2f}s"
+    ret_b = f"{results_b['avg_retrieval_latency']:.2f}s"
+    llm_a = f"{results_a['avg_llm_latency']:.1f}s"
+    llm_b = f"{results_b['avg_llm_latency']:.1f}s"
+    tot_a = f"{results_a['avg_total_latency']:.1f}s"
+    tot_b = f"{results_b['avg_total_latency']:.1f}s"
+    print(f"  {'Retrieval Latency':18s}{ret_a:>20s}{ret_b:>20s}")
+    print(f"  {'LLM Latency':18s}{llm_a:>20s}{llm_b:>20s}")
+    print(f"  {'Total Latency':18s}{tot_a:>20s}{tot_b:>20s}")
     print()
 
     print("ColPali Pre-filter (Pipeline B only)")
@@ -150,7 +161,9 @@ def save_csv(results_a, results_b, path):
         ["Hit Rate@3", f"{results_a['hit_rate_3']:.1%}", f"{results_b['hit_rate_3']:.1%}"],
         ["Recall@1", f"{results_a['recall_1']:.3f}", f"{results_b['recall_1']:.3f}"],
         ["Recall@3", f"{results_a['recall_3']:.3f}", f"{results_b['recall_3']:.3f}"],
-        ["Avg Latency (s)", f"{results_a['avg_latency']:.1f}", f"{results_b['avg_latency']:.1f}"],
+        ["Retrieval Latency (s)", f"{results_a['avg_retrieval_latency']:.2f}", f"{results_b['avg_retrieval_latency']:.2f}"],
+        ["LLM Latency (s)", f"{results_a['avg_llm_latency']:.1f}", f"{results_b['avg_llm_latency']:.1f}"],
+        ["Total Latency (s)", f"{results_a['avg_total_latency']:.1f}", f"{results_b['avg_total_latency']:.1f}"],
         ["Page Hit Rate", "—", f"{results_b['page_hit_rate']:.1%}"],
         ["Page Recall", "—", f"{results_b['page_recall']:.3f}"],
     ]
@@ -199,9 +212,10 @@ def main():
 
     # accumulators: each key is a metric, each value is a list that grows by one per question
     # after the loop, we average each list to get the final aggregate score
-    a_metrics = {"em": [], "rouge_f1": [], "hr1": [], "hr3": [], "r1": [], "r3": [], "latency": []}
-    b_metrics = {"em": [], "rouge_f1": [], "hr1": [], "hr3": [], "r1": [], "r3": [], "latency": [],
-                 "page_hr": [], "page_r": []}
+    a_metrics = {"em": [], "rouge_f1": [], "hr1": [], "hr3": [], "r1": [], "r3": [],
+                 "ret_lat": [], "llm_lat": []}
+    b_metrics = {"em": [], "rouge_f1": [], "hr1": [], "hr3": [], "r1": [], "r3": [],
+                 "ret_lat": [], "llm_lat": [], "page_hr": [], "page_r": []}
 
     for i, qa in enumerate(qa_dataset, 1):
         query = qa["body"]
@@ -212,7 +226,7 @@ def main():
         print(f"[{i}/{len(qa_dataset)}] {query[:70]}...")
 
         # ── Pipeline A: BM25 over full corpus ──
-        pred_a, pmcids_a, lat_a = run_pipeline_a(query, bm25)
+        pred_a, pmcids_a, ret_lat_a, llm_lat_a = run_pipeline_a(query, bm25)
         a_predictions.append(pred_a)
         all_ideal_answers.append(ideal_answers)
 
@@ -224,10 +238,11 @@ def main():
         a_metrics["hr3"].append(hit_rate_at_k(pmcids_a, gold_pmcids, k=3))
         a_metrics["r1"].append(recall_at_k(pmcids_a, gold_pmcids, k=1))
         a_metrics["r3"].append(recall_at_k(pmcids_a, gold_pmcids, k=3))
-        a_metrics["latency"].append(lat_a)
+        a_metrics["ret_lat"].append(ret_lat_a)
+        a_metrics["llm_lat"].append(llm_lat_a)
 
         # ── Pipeline B: ColPali pre-filter → BM25 re-rank ──
-        pred_b, pmcids_b, page_hits_b, lat_b = run_pipeline_b(
+        pred_b, pmcids_b, page_hits_b, ret_lat_b, llm_lat_b = run_pipeline_b(
             query, bm25, model, processor, qdrant_client
         )
         b_predictions.append(pred_b)
@@ -240,7 +255,8 @@ def main():
         b_metrics["hr3"].append(hit_rate_at_k(pmcids_b, gold_pmcids, k=3))
         b_metrics["r1"].append(recall_at_k(pmcids_b, gold_pmcids, k=1))
         b_metrics["r3"].append(recall_at_k(pmcids_b, gold_pmcids, k=3))
-        b_metrics["latency"].append(lat_b)
+        b_metrics["ret_lat"].append(ret_lat_b)
+        b_metrics["llm_lat"].append(llm_lat_b)
         # page-level: how well did ColPali's pre-filter surface gold documents?
         b_metrics["page_hr"].append(page_hit_rate(page_hits_b, gold_pmcids))
         b_metrics["page_r"].append(page_recall(page_hits_b, gold_pmcids))
@@ -253,7 +269,8 @@ def main():
             "pipeline_a": {
                 "prediction": pred_a,
                 "retrieved_pmcids": pmcids_a,
-                "latency": lat_a,
+                "retrieval_latency": ret_lat_a,
+                "llm_latency": llm_lat_a,
                 "exact_match": a_metrics["em"][-1],
                 "rouge_l_f1": a_metrics["rouge_f1"][-1],
                 "hit_rate_1": a_metrics["hr1"][-1],
@@ -264,7 +281,8 @@ def main():
             "pipeline_b": {
                 "prediction": pred_b,
                 "retrieved_pmcids": pmcids_b,
-                "latency": lat_b,
+                "retrieval_latency": ret_lat_b,
+                "llm_latency": llm_lat_b,
                 "exact_match": b_metrics["em"][-1],
                 "rouge_l_f1": b_metrics["rouge_f1"][-1],
                 "hit_rate_1": b_metrics["hr1"][-1],
@@ -293,7 +311,9 @@ def main():
         "hit_rate_3": avg(a_metrics["hr3"]),
         "recall_1": avg(a_metrics["r1"]),
         "recall_3": avg(a_metrics["r3"]),
-        "avg_latency": avg(a_metrics["latency"]),
+        "avg_retrieval_latency": avg(a_metrics["ret_lat"]),
+        "avg_llm_latency": avg(a_metrics["llm_lat"]),
+        "avg_total_latency": avg([r + l for r, l in zip(a_metrics["ret_lat"], a_metrics["llm_lat"])]),
     }
 
     results_b = {
@@ -304,7 +324,9 @@ def main():
         "hit_rate_3": avg(b_metrics["hr3"]),
         "recall_1": avg(b_metrics["r1"]),
         "recall_3": avg(b_metrics["r3"]),
-        "avg_latency": avg(b_metrics["latency"]),
+        "avg_retrieval_latency": avg(b_metrics["ret_lat"]),
+        "avg_llm_latency": avg(b_metrics["llm_lat"]),
+        "avg_total_latency": avg([r + l for r, l in zip(b_metrics["ret_lat"], b_metrics["llm_lat"])]),
         "page_hit_rate": avg(b_metrics["page_hr"]),
         "page_recall": avg(b_metrics["page_r"]),
     }
