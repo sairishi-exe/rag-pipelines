@@ -5,7 +5,7 @@ import time
 
 import requests
 
-from src.config import CACHE_DIR, CONTEXT_TOP_K, DB_PATH, TOP_P_PAGES
+from src.config import CACHE_DIR, CONTEXT_TOP_K, DB_PATH, EVAL_DIR, TOP_P_PAGES
 from src.offline.bm25 import load_index, BM25_INDEX_PATH
 from src.offline.colpali import init_model, embed_query
 from src.online.retriever import retrieve_pipeline_a, retrieve_pipeline_b
@@ -191,44 +191,51 @@ def save_json(results_a, results_b, per_question, path):
 
 
 ### Main
+# Pipelines run separately (not interleaved) to avoid LLM warm/cold variance.
+# Pipeline A runs all questions first, then Pipeline B runs all questions.
 
 def main():
     # preflight
     if not preflight_checks():
         return
 
-    # load resources
-    print("Loading resources...")
+    # load QA dataset
     qa_dataset = load_qa_dataset(os.path.join(CACHE_DIR, "dataframe_subset_cache.json"))
-    bm25 = load_index()
-    model, processor = init_model()
-    qdrant_client = get_client()
-    print(f"Loaded {len(qa_dataset)} questions, BM25 index, ColPali model, Qdrant client.\n")
+    n = len(qa_dataset)
 
-    # collect predictions + ideal answers for BERTScore (batched after loop)
-    per_question = []
-    a_predictions, b_predictions = [], []
-    all_ideal_answers = []  # same for both pipelines (gold answers don't change)
+    # collect predictions + ideal answers for BERTScore (batched after each pipeline)
+    per_question = [{
+        "question": qa["body"],
+        "exact_answer": qa["exact_answer"],
+        "gold_pmcids": qa["pmcid_oa"],
+    } for qa in qa_dataset]
+    all_ideal_answers = [qa["ideal_answer"] for qa in qa_dataset]
 
     # accumulators: each key is a metric, each value is a list that grows by one per question
-    # after the loop, we average each list to get the final aggregate score
+    # after both pipelines, we average each list to get the final aggregate score
     a_metrics = {"em": [], "rouge_f1": [], "hr1": [], "hr3": [], "r1": [], "r3": [],
                  "ret_lat": [], "llm_lat": []}
     b_metrics = {"em": [], "rouge_f1": [], "hr1": [], "hr3": [], "r1": [], "r3": [],
                  "ret_lat": [], "llm_lat": [], "page_hr": [], "page_r": []}
+    a_predictions, b_predictions = [], []
+
+    # ══════════════════════════════════════════════════════════════
+    # Pipeline A: BM25 over full corpus
+    # ══════════════════════════════════════════════════════════════
+    print("Loading BM25 index...")
+    bm25 = load_index()
+    print(f"\n── Pipeline A (BM25 only) ── {n} questions\n")
 
     for i, qa in enumerate(qa_dataset, 1):
         query = qa["body"]
-        exact_answers = qa["exact_answer"]   # factoid gold answers (e.g. ["T-UCstem1"])
-        ideal_answers = qa["ideal_answer"]   # full-sentence gold answers
-        gold_pmcids = qa["pmcid_oa"]         # PMCIDs of documents containing the answer
+        exact_answers = qa["exact_answer"]
+        ideal_answers = qa["ideal_answer"]
+        gold_pmcids = qa["pmcid_oa"]
 
-        print(f"[{i}/{len(qa_dataset)}] {query[:70]}...")
+        print(f"  [A {i}/{n}] {query[:70]}...")
 
-        # ── Pipeline A: BM25 over full corpus ──
         pred_a, pmcids_a, ret_lat_a, llm_lat_a = run_pipeline_a(query, bm25)
         a_predictions.append(pred_a)
-        all_ideal_answers.append(ideal_answers)
 
         # answer quality: exact match vs exact_answer, ROUGE-L vs ideal_answer
         a_metrics["em"].append(exact_match(pred_a, exact_answers))
@@ -241,7 +248,36 @@ def main():
         a_metrics["ret_lat"].append(ret_lat_a)
         a_metrics["llm_lat"].append(llm_lat_a)
 
-        # ── Pipeline B: ColPali pre-filter → BM25 re-rank ──
+        per_question[i - 1]["pipeline_a"] = {
+            "prediction": pred_a,
+            "retrieved_pmcids": pmcids_a,
+            "retrieval_latency": ret_lat_a,
+            "llm_latency": llm_lat_a,
+            "exact_match": a_metrics["em"][-1],
+            "rouge_l_f1": a_metrics["rouge_f1"][-1],
+            "hit_rate_1": a_metrics["hr1"][-1],
+            "hit_rate_3": a_metrics["hr3"][-1],
+            "recall_1": a_metrics["r1"][-1],
+            "recall_3": a_metrics["r3"][-1],
+        }
+
+    # ══════════════════════════════════════════════════════════════
+    # Pipeline B: ColPali pre-filter → BM25 re-rank
+    # Load ColPali model only when needed (frees memory during Pipeline A)
+    # ══════════════════════════════════════════════════════════════
+    print("\nLoading ColPali model + Qdrant client...")
+    model, processor = init_model()
+    qdrant_client = get_client()
+    print(f"\n── Pipeline B (ColPali + BM25) ── {n} questions\n")
+
+    for i, qa in enumerate(qa_dataset, 1):
+        query = qa["body"]
+        exact_answers = qa["exact_answer"]
+        ideal_answers = qa["ideal_answer"]
+        gold_pmcids = qa["pmcid_oa"]
+
+        print(f"  [B {i}/{n}] {query[:70]}...")
+
         pred_b, pmcids_b, page_hits_b, ret_lat_b, llm_lat_b = run_pipeline_b(
             query, bm25, model, processor, qdrant_client
         )
@@ -261,46 +297,30 @@ def main():
         b_metrics["page_hr"].append(page_hit_rate(page_hits_b, gold_pmcids))
         b_metrics["page_r"].append(page_recall(page_hits_b, gold_pmcids))
 
-        # per-question record (includes metric scores for per-question analysis)
-        per_question.append({
-            "question": query,
-            "exact_answer": exact_answers,
-            "gold_pmcids": gold_pmcids,
-            "pipeline_a": {
-                "prediction": pred_a,
-                "retrieved_pmcids": pmcids_a,
-                "retrieval_latency": ret_lat_a,
-                "llm_latency": llm_lat_a,
-                "exact_match": a_metrics["em"][-1],
-                "rouge_l_f1": a_metrics["rouge_f1"][-1],
-                "hit_rate_1": a_metrics["hr1"][-1],
-                "hit_rate_3": a_metrics["hr3"][-1],
-                "recall_1": a_metrics["r1"][-1],
-                "recall_3": a_metrics["r3"][-1],
-            },
-            "pipeline_b": {
-                "prediction": pred_b,
-                "retrieved_pmcids": pmcids_b,
-                "retrieval_latency": ret_lat_b,
-                "llm_latency": llm_lat_b,
-                "exact_match": b_metrics["em"][-1],
-                "rouge_l_f1": b_metrics["rouge_f1"][-1],
-                "hit_rate_1": b_metrics["hr1"][-1],
-                "hit_rate_3": b_metrics["hr3"][-1],
-                "recall_1": b_metrics["r1"][-1],
-                "recall_3": b_metrics["r3"][-1],
-                "page_hit_rate": b_metrics["page_hr"][-1],
-                "page_recall": b_metrics["page_r"][-1],
-            },
-        })
+        per_question[i - 1]["pipeline_b"] = {
+            "prediction": pred_b,
+            "retrieved_pmcids": pmcids_b,
+            "retrieval_latency": ret_lat_b,
+            "llm_latency": llm_lat_b,
+            "exact_match": b_metrics["em"][-1],
+            "rouge_l_f1": b_metrics["rouge_f1"][-1],
+            "hit_rate_1": b_metrics["hr1"][-1],
+            "hit_rate_3": b_metrics["hr3"][-1],
+            "recall_1": b_metrics["r1"][-1],
+            "recall_3": b_metrics["r3"][-1],
+            "page_hit_rate": b_metrics["page_hr"][-1],
+            "page_recall": b_metrics["page_r"][-1],
+        }
 
-    # BERTScore computed after loop in one batch (runs BERT inference — batching is faster)
+    # ══════════════════════════════════════════════════════════════
+    # BERTScore + aggregation + output
+    # ══════════════════════════════════════════════════════════════
+    # BERTScore computed after both pipelines in one batch (runs BERT inference — batching is faster)
     print("\nComputing BERTScore...")
     a_bert = bert_score(a_predictions, all_ideal_answers)
     b_bert = bert_score(b_predictions, all_ideal_answers)
 
     # aggregate: average each metric's per-question scores across all questions
-    n = len(qa_dataset)
     avg = lambda vals: sum(vals) / n
 
     results_a = {
@@ -333,8 +353,8 @@ def main():
 
     # output results in three formats: terminal table, CSV (for Google Sheets), JSON (for re-analysis)
     print_table(results_a, results_b, n)
-    save_csv(results_a, results_b, os.path.join(CACHE_DIR, "eval_results.csv")) # same as print_table
-    save_json(results_a, results_b, per_question, os.path.join(CACHE_DIR, "eval_results.json"))
+    save_csv(results_a, results_b, os.path.join(EVAL_DIR, "eval_results.csv"))
+    save_json(results_a, results_b, per_question, os.path.join(EVAL_DIR, "eval_results.json"))
 
 
 if __name__ == "__main__":
