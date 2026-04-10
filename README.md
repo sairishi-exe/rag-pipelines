@@ -67,7 +67,8 @@ project/
     processed/
       images/             # per-page images: {pmcid}/p0001.png
       ocr/                # per-page OCR text
-    cache/                # intermediate DataFrames, eval results (CSV/JSON)
+    cache/                # intermediate DataFrames and mappings
+    eval/                 # evaluation results (CSV/JSON)
     indexes/
       bm25/               # BM25 pickle index
       qdrant/             # Qdrant vector DB storage (Docker volume)
@@ -154,8 +155,8 @@ python -m src.eval.eval
 ```
 Outputs:
 - Terminal comparison table
-- `data/cache/eval_results.csv` — for Google Sheets / reports
-- `data/cache/eval_results.json` — per-question results for analysis
+- `data/eval/eval_results.csv` — for Google Sheets / reports
+- `data/eval/eval_results.json` — per-question results for analysis
 
 
 ## Authors
