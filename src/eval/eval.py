@@ -108,48 +108,6 @@ def run_pipeline_b(query, bm25, model, processor, qdrant_client):
 
 ### Output formatting
 
-def print_table(results_a, results_b, num_questions):
-    """Print comparison table to terminal."""
-    print()
-    print("═" * 63)
-    print(f"{'':20s}{'Pipeline A':>20s}{'Pipeline B':>20s}")
-    print(f"{'':20s}{'(BM25 only)':>20s}{'(ColPali + BM25)':>20s}")
-    print("═" * 63)
-
-    print("Answer Quality")
-    print(f"  {'Exact Match':18s}{results_a['exact_match']:>19.1%}{results_b['exact_match']:>20.1%}")
-    print(f"  {'ROUGE-L (F1)':18s}{results_a['rouge_l_f1']:>20.3f}{results_b['rouge_l_f1']:>20.3f}")
-    print(f"  {'BERTScore (F1)':18s}{results_a['bert_score_f1']:>20.3f}{results_b['bert_score_f1']:>20.3f}")
-    print()
-
-    print("Retrieval Quality")
-    print(f"  {'Hit Rate@1':18s}{results_a['hit_rate_1']:>19.1%}{results_b['hit_rate_1']:>20.1%}")
-    print(f"  {'Hit Rate@3':18s}{results_a['hit_rate_3']:>19.1%}{results_b['hit_rate_3']:>20.1%}")
-    print(f"  {'Recall@1':18s}{results_a['recall_1']:>20.3f}{results_b['recall_1']:>20.3f}")
-    print(f"  {'Recall@3':18s}{results_a['recall_3']:>20.3f}{results_b['recall_3']:>20.3f}")
-    print()
-
-    print("Efficiency")
-    ret_a = f"{results_a['avg_retrieval_latency']:.2f}s"
-    ret_b = f"{results_b['avg_retrieval_latency']:.2f}s"
-    llm_a = f"{results_a['avg_llm_latency']:.1f}s"
-    llm_b = f"{results_b['avg_llm_latency']:.1f}s"
-    tot_a = f"{results_a['avg_total_latency']:.1f}s"
-    tot_b = f"{results_b['avg_total_latency']:.1f}s"
-    print(f"  {'Retrieval Latency':18s}{ret_a:>20s}{ret_b:>20s}")
-    print(f"  {'LLM Latency':18s}{llm_a:>20s}{llm_b:>20s}")
-    print(f"  {'Total Latency':18s}{tot_a:>20s}{tot_b:>20s}")
-    print()
-
-    print("ColPali Pre-filter (Pipeline B only)")
-    print(f"  {'Page Hit Rate':18s}{'—':>20s}{results_b['page_hit_rate']:>19.1%}")
-    print(f"  {'Page Recall':18s}{'—':>20s}{results_b['page_recall']:>20.3f}")
-
-    print("═" * 63)
-    print(f"Questions: {num_questions}  |  Chunks retrieved: {CONTEXT_TOP_K}  |  ColPali pages: {TOP_P_PAGES}")
-    print()
-
-
 def save_csv(results_a, results_b, path):
     """Save comparison table as CSV."""
     rows = [
@@ -351,8 +309,7 @@ def main():
         "page_recall": avg(b_metrics["page_r"]),
     }
 
-    # output results in three formats: terminal table, CSV (for Google Sheets), JSON (for re-analysis)
-    print_table(results_a, results_b, n)
+    # output results as CSV (for Google Sheets) and JSON (for re-analysis)
     save_csv(results_a, results_b, os.path.join(EVAL_DIR, f"eval_results_p{TOP_P_PAGES}.csv"))
     save_json(results_a, results_b, per_question, os.path.join(EVAL_DIR, f"eval_results_p{TOP_P_PAGES}.json"))
 
