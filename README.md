@@ -1,29 +1,29 @@
-# Hybrid Visual-Lexical RAG Evaluation (BioASQ + PMC)
+# Hybrid Visual–Lexical RAG Evaluation (BioASQ + PMC)
 
-We evaluate a cost-constrained RAG scenario: a team with a text-only LLM, a standard layout-aware OCR tool, and a fixed-window chunking strategy wants to know whether adding ColPali as a visual page pre-filter is a smart investment, or whether the text pipeline alone is good enough.
+We evaluate a cost-constrained RAG scenario: a team with a text-only LLM, a standard layout-aware OCR tool, and a fixed-window chunking strategy wants to know whether adding ColPali as a visual page pre-filter is a smart investment — or whether the text pipeline alone is good enough.
 
-**Primary question:** does ColPali page pre-filtering improve Recall@K (surfacing the right pages more reliably) compared to running BM25 over the full corpus?
+**Primary question:** does ColPali page pre-filtering improve Recall@K — surfacing the right pages more reliably — compared to running BM25 over the full corpus?
 
 **Secondary question:** if Recall@K improves, does that translate to better LLM answer quality (ROUGE-L, BERTScore), or is the real bottleneck the document parsing pipeline rather than the retrieval step?
 
-**If ColPali helps:** it demonstrates that a one-time offline embedding pass delivers meaningful ROI (better retrieval precision and potentially better answers) at the tradeoff of added query latency and amortized preprocessing cost. For a team building an internal knowledge tool over a stable document corpus, this tradeoff is likely worth it.
+**If ColPali helps:** it demonstrates that a one-time offline embedding pass delivers meaningful ROI — better retrieval precision and potentially better answers — at the tradeoff of added query latency and amortized preprocessing cost. For a team building an internal knowledge tool over a stable document corpus, this tradeoff is likely worth it.
 
-**If ColPali improves Recall@K but not answer quality:** it still has value as a citation layer, surfacing the exact PDF page alongside the answer so users can verify or dig deeper, while suggesting the true bottleneck is in how well the text is extracted and chunked, not in how pages are ranked.
+**If ColPali improves Recall@K but not answer quality:** it still has value as a citation layer — surfacing the exact PDF page alongside the answer so users can verify or dig deeper — while suggesting the true bottleneck is in how well the text is extracted and chunked, not in how pages are ranked.
 
 **If ColPali adds nothing:** the text pipeline is sufficient at this scale and corpus type, and the overhead of visual page embeddings is not justified without upgrading to a vision-capable LLM for end-to-end gains.
 
 ## What We Compare
 
-### Pipeline A (Lexical Baseline)
+### Pipeline A — Lexical Baseline
 1) OCR over all pages (offline)
-2) Chunk OCR text (fixed window; 400 words with overlap)
+2) Chunk OCR text (fixed window; 400 tokens with overlap)
 3) Global BM25 retrieval over all chunks → fill fixed context budget
 4) Send top-K chunks to text-only LLM → answer
 
-### Pipeline B (Visual-Guided Hybrid)
-1) Compute ColPali page embeddings (offline)
+### Pipeline B — Visual-Guided Hybrid
+1) Compute ColPali page embeddings (offline) using 2x2 pooling (1024 → 256 vectors/page)
 2) Same OCR + chunking as Pipeline A
-3) Query-time: ColPali retrieves top-P pages, filter chunks to those pages only
+3) Query-time: ColPali retrieves top-P pages → filter chunks to those pages only
 4) BM25 retrieval on filtered chunks → fill same fixed context budget → LLM → answer
 
 ## Metrics
@@ -42,7 +42,7 @@ project/
   src/
     prepare_data/
       build_dataset.py    # load BioASQ, resolve PMIDs → PMCIDs, cache
-      filter_dataset.py   # compute OA ratio, scope to ~120 documents
+      filter_dataset.py   # compute OA ratio, scope to ~500 pages
       download_corpus.py  # download PMC PDFs
     offline/
       pdf_to_images.py    # rasterize PDFs to per-page images
@@ -153,13 +153,10 @@ Requires Ollama (with llama3.1:8b) and Qdrant running:
 ```bash
 python -m src.eval.eval
 ```
-This runs both Pipeline A and Pipeline B on all QA pairs, then computes all metrics.
-
-The number of ColPali candidate pages for Pipeline B can be configured via `TOP_P_PAGES` in `src/config.py`. We tested P=5 and P=10 in our evaluation. Change this value and rerun to test other settings.
-
 Outputs:
-- `data/eval/eval_results_p{TOP_P_PAGES}.csv` - aggregate comparison for reports
-- `data/eval/eval_results_p{TOP_P_PAGES}.json` - per-question results for analysis
+- Terminal comparison table
+- `data/eval/eval_results.csv` — for Google Sheets / reports
+- `data/eval/eval_results.json` — per-question results for analysis
 
 
 ## Authors
