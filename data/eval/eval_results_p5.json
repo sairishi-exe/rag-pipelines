@@ -1,0 +1,3318 @@
+{
+  "aggregate": {
+    "pipeline_a": {
+      "exact_match": 0.6811594202898551,
+      "rouge_l_f1": 0.26245716644257905,
+      "bert_score_f1": 0.8627421398093735,
+      "hit_rate_1": 0.9130434782608695,
+      "hit_rate_3": 0.9565217391304348,
+      "recall_1": 0.7692028985507247,
+      "recall_3": 0.8632850241545894,
+      "avg_retrieval_latency": 0.0072958192963531055,
+      "avg_llm_latency": 11.090389649073282,
+      "avg_total_latency": 11.097685468369637
+    },
+    "pipeline_b": {
+      "exact_match": 0.6666666666666666,
+      "rouge_l_f1": 0.268886852768411,
+      "bert_score_f1": 0.8611460483592489,
+      "hit_rate_1": 0.9855072463768116,
+      "hit_rate_3": 0.9855072463768116,
+      "recall_1": 0.8247584541062801,
+      "recall_3": 0.8728260869565218,
+      "avg_retrieval_latency": 0.33705091130906256,
+      "avg_llm_latency": 11.175612363262452,
+      "avg_total_latency": 11.512663274571516,
+      "page_hit_rate": 1.0,
+      "page_recall": 0.9602657004830919
+    }
+  },
+  "per_question": [
+    {
+      "question": "Which ultraconserved element is associated with Embryonic Stem Cells (ESC) self-renewal?",
+      "exact_answer": [
+        "T-UCstem1"
+      ],
+      "gold_pmcids": [
+        "PMC5918197"
+      ],
+      "pipeline_a": {
+        "prediction": "T-UCstem1",
+        "retrieved_pmcids": [
+          "PMC5918197",
+          "PMC5918197",
+          "PMC5918197",
+          "PMC5918197",
+          "PMC5918197"
+        ],
+        "retrieval_latency": 0.016687870025634766,
+        "llm_latency": 17.992995023727417,
+        "exact_match": 1,
+        "rouge_l_f1": 0.042553191489361694,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "uc.170+ (T-UCstem1)",
+        "retrieved_pmcids": [
+          "PMC5918197",
+          "PMC5918197",
+          "PMC5918197",
+          "PMC5918197",
+          "PMC5918197"
+        ],
+        "retrieval_latency": 1.7896220684051514,
+        "llm_latency": 12.472752094268799,
+        "exact_match": 1,
+        "rouge_l_f1": 0.08333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Under which environment does SELANSI run?",
+      "exact_answer": [
+        "MATLAB"
+      ],
+      "gold_pmcids": [
+        "PMC6030881"
+      ],
+      "pipeline_a": {
+        "prediction": "Windows, Linux and MacOS.",
+        "retrieved_pmcids": [
+          "PMC6030881",
+          "PMC6030881",
+          "PMC6030881",
+          "PMC6030881",
+          "PMC6030881"
+        ],
+        "retrieval_latency": 0.011129140853881836,
+        "llm_latency": 10.034036874771118,
+        "exact_match": 0,
+        "rouge_l_f1": 0.02631578947368421,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Windows, Linux and MacOS.",
+        "retrieved_pmcids": [
+          "PMC6030881",
+          "PMC6030881",
+          "PMC6030881",
+          "PMC6030881",
+          "PMC6030881"
+        ],
+        "retrieval_latency": 0.3476982116699219,
+        "llm_latency": 10.270270109176636,
+        "exact_match": 0,
+        "rouge_l_f1": 0.02631578947368421,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "How many proteins have been queried for protein partners by the Drosophila protein interaction map (DPiM)?",
+      "exact_answer": [
+        "5,000"
+      ],
+      "gold_pmcids": [
+        "PMC3519659"
+      ],
+      "pipeline_a": {
+        "prediction": "5,000",
+        "retrieved_pmcids": [
+          "PMC3519659",
+          "PMC3519659",
+          "PMC3519659",
+          "PMC3519659",
+          "PMC3519659"
+        ],
+        "retrieval_latency": 0.009489059448242188,
+        "llm_latency": 9.846513032913208,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2222222222222222,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "5,000",
+        "retrieved_pmcids": [
+          "PMC3519659",
+          "PMC3519659",
+          "PMC3519659",
+          "PMC3519659",
+          "PMC3519659"
+        ],
+        "retrieval_latency": 0.36352014541625977,
+        "llm_latency": 10.122966051101685,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2222222222222222,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which database associates human noncoding SNPs with their three-dimensional interacting genes?",
+      "exact_answer": [
+        "3DSNP"
+      ],
+      "gold_pmcids": [
+        "PMC5210526"
+      ],
+      "pipeline_a": {
+        "prediction": "3DSNP.",
+        "retrieved_pmcids": [
+          "PMC5210526",
+          "PMC5210526",
+          "PMC5210526",
+          "PMC5210526",
+          "PMC5210526"
+        ],
+        "retrieval_latency": 0.007284879684448242,
+        "llm_latency": 9.764369249343872,
+        "exact_match": 1,
+        "rouge_l_f1": 0.052631578947368425,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "3DSNP.",
+        "retrieved_pmcids": [
+          "PMC5210526",
+          "PMC5210526",
+          "PMC5210526",
+          "PMC5210526",
+          "PMC5210526"
+        ],
+        "retrieval_latency": 0.3522911071777344,
+        "llm_latency": 9.758532047271729,
+        "exact_match": 1,
+        "rouge_l_f1": 0.052631578947368425,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Mention the only available genomics and developmental transcriptomics resource for the urochordate Oikopleura dioica",
+      "exact_answer": [
+        "OikoBase"
+      ],
+      "gold_pmcids": [
+        "PMC3531137"
+      ],
+      "pipeline_a": {
+        "prediction": "OikoBase.",
+        "retrieved_pmcids": [
+          "PMC3531137",
+          "PMC3531137",
+          "PMC3531137",
+          "PMC3531137",
+          "PMC3531137"
+        ],
+        "retrieval_latency": 0.008644819259643555,
+        "llm_latency": 12.700328826904297,
+        "exact_match": 1,
+        "rouge_l_f1": 0.029411764705882353,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "OikoBase.",
+        "retrieved_pmcids": [
+          "PMC3531137",
+          "PMC3531137",
+          "PMC3531137",
+          "PMC3531137",
+          "PMC3531137"
+        ],
+        "retrieval_latency": 0.3633291721343994,
+        "llm_latency": 12.69082498550415,
+        "exact_match": 1,
+        "rouge_l_f1": 0.029411764705882353,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which algorithm has been developed for trio-based benchmarking of variant calls?",
+      "exact_answer": [
+        "geck"
+      ],
+      "gold_pmcids": [
+        "PMC6184596"
+      ],
+      "pipeline_a": {
+        "prediction": "geck",
+        "retrieved_pmcids": [
+          "PMC6184596",
+          "PMC6184596",
+          "PMC6184596",
+          "PMC6184596",
+          "PMC6184596"
+        ],
+        "retrieval_latency": 0.00741887092590332,
+        "llm_latency": 11.019170045852661,
+        "exact_match": 1,
+        "rouge_l_f1": 0.05128205128205127,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "geck",
+        "retrieved_pmcids": [
+          "PMC6184596",
+          "PMC6184596",
+          "PMC6184596",
+          "PMC6184596",
+          "PMC6184596"
+        ],
+        "retrieval_latency": 0.38979601860046387,
+        "llm_latency": 10.896231889724731,
+        "exact_match": 1,
+        "rouge_l_f1": 0.05128205128205127,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is predicted using SURFY?",
+      "exact_answer": [
+        "surfaceome predictor"
+      ],
+      "gold_pmcids": [
+        "PMC6243280"
+      ],
+      "pipeline_a": {
+        "prediction": "surfaceome proteins",
+        "retrieved_pmcids": [
+          "PMC6243280",
+          "PMC6243280",
+          "PMC6243280",
+          "PMC6243280",
+          "PMC6243280"
+        ],
+        "retrieval_latency": 0.0050318241119384766,
+        "llm_latency": 9.258113861083984,
+        "exact_match": 0,
+        "rouge_l_f1": 0.22222222222222224,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "surfaceome proteins",
+        "retrieved_pmcids": [
+          "PMC6243280",
+          "PMC6243280",
+          "PMC6243280",
+          "PMC6243280",
+          "PMC6243280"
+        ],
+        "retrieval_latency": 0.3789229393005371,
+        "llm_latency": 9.395853996276855,
+        "exact_match": 0,
+        "rouge_l_f1": 0.22222222222222224,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "When was dupilumab approved by EMA?",
+      "exact_answer": [
+        "2017"
+      ],
+      "gold_pmcids": [
+        "PMC6567042"
+      ],
+      "pipeline_a": {
+        "prediction": "2017",
+        "retrieved_pmcids": [
+          "PMC6567042",
+          "PMC6567042",
+          "PMC6567042",
+          "PMC8648650",
+          "PMC9345835"
+        ],
+        "retrieval_latency": 0.005270957946777344,
+        "llm_latency": 10.42662501335144,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2222222222222222,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "2017",
+        "retrieved_pmcids": [
+          "PMC6567042",
+          "PMC6567042",
+          "PMC6567042",
+          "PMC8648650",
+          "PMC5636860"
+        ],
+        "retrieval_latency": 0.32672595977783203,
+        "llm_latency": 9.957242012023926,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2222222222222222,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which bacterium has the smallest genome in base pairs yet found?",
+      "exact_answer": [
+        "Nasuia deltocephalinicola"
+      ],
+      "gold_pmcids": [
+        "PMC3787670"
+      ],
+      "pipeline_a": {
+        "prediction": "Nasuia deltocephalinicola, with a genome of 112 kb.",
+        "retrieved_pmcids": [
+          "PMC2896530",
+          "PMC3787670",
+          "PMC2896530",
+          "PMC2896530",
+          "PMC3787670"
+        ],
+        "retrieval_latency": 0.006369113922119141,
+        "llm_latency": 12.312743902206421,
+        "exact_match": 1,
+        "rouge_l_f1": 0.37037037037037035,
+        "hit_rate_1": 0,
+        "hit_rate_3": 1,
+        "recall_1": 0.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Tremblaya princeps (139 kb) is mentioned as the next smallest known bacterial genome, but Nasuia-ALF has a smaller genome of 112 kb.",
+        "retrieved_pmcids": [
+          "PMC3787670",
+          "PMC3787670",
+          "PMC3787670",
+          "PMC3787670",
+          "PMC3787670"
+        ],
+        "retrieval_latency": 0.32649803161621094,
+        "llm_latency": 14.048827886581421,
+        "exact_match": 0,
+        "rouge_l_f1": 0.28571428571428575,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which disease is gemtuzumab ozogamicin used for?",
+      "exact_answer": [
+        "Acute myeloid leukemia"
+      ],
+      "gold_pmcids": [
+        "PMC5702869"
+      ],
+      "pipeline_a": {
+        "prediction": "Acute myeloid leukemia (AML)",
+        "retrieved_pmcids": [
+          "PMC5702869",
+          "PMC5702869",
+          "PMC5702869",
+          "PMC5702869",
+          "PMC5018158"
+        ],
+        "retrieval_latency": 0.0057981014251708984,
+        "llm_latency": 12.571850061416626,
+        "exact_match": 1,
+        "rouge_l_f1": 0.39999999999999997,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Acute myeloid leukemia (AML)",
+        "retrieved_pmcids": [
+          "PMC5702869",
+          "PMC5702869",
+          "PMC4507456",
+          "PMC4507456",
+          "PMC4507456"
+        ],
+        "retrieval_latency": 0.3429379463195801,
+        "llm_latency": 10.620075941085815,
+        "exact_match": 1,
+        "rouge_l_f1": 0.39999999999999997,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "When did delafloxacin receive its first approval in the USA for acute bacterial skin and skin structure infections?",
+      "exact_answer": [
+        "2017"
+      ],
+      "gold_pmcids": [
+        "PMC6208769"
+      ],
+      "pipeline_a": {
+        "prediction": "June 2017",
+        "retrieved_pmcids": [
+          "PMC6208769",
+          "PMC6208769",
+          "PMC6208769",
+          "PMC6208769",
+          "PMC6208769"
+        ],
+        "retrieval_latency": 0.013229131698608398,
+        "llm_latency": 11.749300003051758,
+        "exact_match": 1,
+        "rouge_l_f1": 0.09523809523809525,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "June 2017",
+        "retrieved_pmcids": [
+          "PMC6208769",
+          "PMC6208769",
+          "PMC6208769",
+          "PMC6208769",
+          "PMC6208769"
+        ],
+        "retrieval_latency": 0.369279146194458,
+        "llm_latency": 11.51830792427063,
+        "exact_match": 1,
+        "rouge_l_f1": 0.09523809523809525,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which R/bioconductor package exists for discovery of intergenic transcripts?",
+      "exact_answer": [
+        "PRAM",
+        "Pooling RNA-seq and Assembling Models"
+      ],
+      "gold_pmcids": [
+        "PMC7605252"
+      ],
+      "pipeline_a": {
+        "prediction": "PRAM",
+        "retrieved_pmcids": [
+          "PMC7605252",
+          "PMC7605252",
+          "PMC7605252",
+          "PMC7605252",
+          "PMC7605252"
+        ],
+        "retrieval_latency": 0.0072748661041259766,
+        "llm_latency": 10.361998796463013,
+        "exact_match": 1,
+        "rouge_l_f1": 0.1111111111111111,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "PRAM (Pooling RNA-seq and Assembling Models)",
+        "retrieved_pmcids": [
+          "PMC7605252",
+          "PMC7605252",
+          "PMC7605252",
+          "PMC7605252",
+          "PMC7605252"
+        ],
+        "retrieval_latency": 0.2919960021972656,
+        "llm_latency": 11.016370058059692,
+        "exact_match": 1,
+        "rouge_l_f1": 0.4827586206896552,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which method is used for prediction of novel microRNA genes in cancer-associated genomic regions?",
+      "exact_answer": [
+        "SSCprofiler"
+      ],
+      "gold_pmcids": [
+        "PMC2691815"
+      ],
+      "pipeline_a": {
+        "prediction": "SSCprofiler, utilizing a hairpin Profile Hidden Markov Models based probabilistic method.",
+        "retrieved_pmcids": [
+          "PMC2691815",
+          "PMC2691815",
+          "PMC2691815",
+          "PMC2691815",
+          "PMC2691815"
+        ],
+        "retrieval_latency": 0.007664680480957031,
+        "llm_latency": 13.747913122177124,
+        "exact_match": 1,
+        "rouge_l_f1": 0.12500000000000003,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "SSCprofiler, utilizing a hairpin Profile Hidden Markov Models based probabilistic method.",
+        "retrieved_pmcids": [
+          "PMC2691815",
+          "PMC2691815",
+          "PMC2691815",
+          "PMC2691815",
+          "PMC2691815"
+        ],
+        "retrieval_latency": 0.35025501251220703,
+        "llm_latency": 13.805309772491455,
+        "exact_match": 1,
+        "rouge_l_f1": 0.12500000000000003,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which tool is used for the identification of recurrent variants in noncoding regions?",
+      "exact_answer": [
+        "LARVA"
+      ],
+      "gold_pmcids": [
+        "PMC4787796"
+      ],
+      "pipeline_a": {
+        "prediction": "LARVA.",
+        "retrieved_pmcids": [
+          "PMC4787796",
+          "PMC4787796",
+          "PMC4787796",
+          "PMC4787796",
+          "PMC4787796"
+        ],
+        "retrieval_latency": 0.011140108108520508,
+        "llm_latency": 9.121031999588013,
+        "exact_match": 1,
+        "rouge_l_f1": 0.026666666666666665,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "LARVA.",
+        "retrieved_pmcids": [
+          "PMC4787796",
+          "PMC4787796",
+          "PMC4787796",
+          "PMC4787796",
+          "PMC4787796"
+        ],
+        "retrieval_latency": 0.30636096000671387,
+        "llm_latency": 9.13548994064331,
+        "exact_match": 1,
+        "rouge_l_f1": 0.026666666666666665,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What does Zanubrutinib inhibit?",
+      "exact_answer": [
+        "Bruton tyrosine kinase"
+      ],
+      "gold_pmcids": [
+        "PMC9150264"
+      ],
+      "pipeline_a": {
+        "prediction": "Bruton's tyrosine kinase (BTK)",
+        "retrieved_pmcids": [
+          "PMC9303624",
+          "PMC7214662",
+          "PMC2896530",
+          "PMC9150264",
+          "PMC9150264"
+        ],
+        "retrieval_latency": 0.0039081573486328125,
+        "llm_latency": 11.896434783935547,
+        "exact_match": 0,
+        "rouge_l_f1": 0.5,
+        "hit_rate_1": 0,
+        "hit_rate_3": 0,
+        "recall_1": 0.0,
+        "recall_3": 0.0
+      },
+      "pipeline_b": {
+        "prediction": "Bruton's tyrosine kinase (BTK)",
+        "retrieved_pmcids": [
+          "PMC9150264",
+          "PMC9150264",
+          "PMC9150264",
+          "PMC9150264",
+          "PMC9150264"
+        ],
+        "retrieval_latency": 0.3095061779022217,
+        "llm_latency": 13.794687032699585,
+        "exact_match": 0,
+        "rouge_l_f1": 0.5,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Through which pathway does the FTO-guided demethylation of GADD46 drive myogenesis?",
+      "exact_answer": [
+        "p38 MAPK pathway"
+      ],
+      "gold_pmcids": [
+        "PMC8408560"
+      ],
+      "pipeline_a": {
+        "prediction": "p38 MAPK pathway.",
+        "retrieved_pmcids": [
+          "PMC8408560",
+          "PMC8408560",
+          "PMC8408560",
+          "PMC8408560",
+          "PMC8408560"
+        ],
+        "retrieval_latency": 0.010609149932861328,
+        "llm_latency": 11.486129999160767,
+        "exact_match": 1,
+        "rouge_l_f1": 0.35294117647058826,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "p38 MAPK pathway.",
+        "retrieved_pmcids": [
+          "PMC8408560",
+          "PMC8408560",
+          "PMC8408560",
+          "PMC8408560",
+          "PMC8408560"
+        ],
+        "retrieval_latency": 0.36646294593811035,
+        "llm_latency": 11.508470058441162,
+        "exact_match": 1,
+        "rouge_l_f1": 0.35294117647058826,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the synonym of MK-1602?",
+      "exact_answer": [
+        "ubrogepant"
+      ],
+      "gold_pmcids": [
+        "PMC7214662"
+      ],
+      "pipeline_a": {
+        "prediction": "Ubrogepant",
+        "retrieved_pmcids": [
+          "PMC7214662",
+          "PMC7214662",
+          "PMC7214647",
+          "PMC7214662",
+          "PMC7214647"
+        ],
+        "retrieval_latency": 0.005048036575317383,
+        "llm_latency": 11.206677913665771,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Ubrogepant",
+        "retrieved_pmcids": [
+          "PMC7214662",
+          "PMC7214647",
+          "PMC7214662",
+          "PMC7214647",
+          "PMC7214662"
+        ],
+        "retrieval_latency": 0.31699371337890625,
+        "llm_latency": 12.444218158721924,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is PUL-2 in Duchenne Muscular Dystrophy?",
+      "exact_answer": [
+        "Performance of Upper Limb",
+        "assessement measure of upper limb function"
+      ],
+      "gold_pmcids": [
+        "PMC10357219"
+      ],
+      "pipeline_a": {
+        "prediction": "Performance of Upper Limb assessment (version 2.0)",
+        "retrieved_pmcids": [
+          "PMC10357219",
+          "PMC10357219",
+          "PMC10357219",
+          "PMC8385516",
+          "PMC8842766"
+        ],
+        "retrieval_latency": 0.005838155746459961,
+        "llm_latency": 11.950313091278076,
+        "exact_match": 1,
+        "rouge_l_f1": 0.44444444444444436,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Performance of Upper Limb, version 2.0 (PUL-2) assessment tool for Duchenne Muscular Dystrophy patients.",
+        "retrieved_pmcids": [
+          "PMC10357219",
+          "PMC10357219",
+          "PMC10357219",
+          "PMC10357219",
+          "PMC10357219"
+        ],
+        "retrieval_latency": 0.3904857635498047,
+        "llm_latency": 10.976412057876587,
+        "exact_match": 1,
+        "rouge_l_f1": 0.6666666666666667,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which tool has been developed for coverage calculation for genomes?",
+      "exact_answer": [
+        "Mosdepth"
+      ],
+      "gold_pmcids": [
+        "PMC6030888"
+      ],
+      "pipeline_a": {
+        "prediction": "Mosdepth.",
+        "retrieved_pmcids": [
+          "PMC6030888",
+          "PMC6030888",
+          "PMC6030888",
+          "PMC6030888",
+          "PMC5210548"
+        ],
+        "retrieval_latency": 0.01197195053100586,
+        "llm_latency": 8.903964042663574,
+        "exact_match": 1,
+        "rouge_l_f1": 0.05405405405405406,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Mosdepth.",
+        "retrieved_pmcids": [
+          "PMC6030888",
+          "PMC6030888",
+          "PMC6030888",
+          "PMC6030888",
+          "PMC8826174"
+        ],
+        "retrieval_latency": 0.37697529792785645,
+        "llm_latency": 9.607876062393188,
+        "exact_match": 1,
+        "rouge_l_f1": 0.05405405405405406,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which tool has been developed to discover VNTR-associated deletions?",
+      "exact_answer": [
+        "trfermikit"
+      ],
+      "gold_pmcids": [
+        "PMC8826174"
+      ],
+      "pipeline_a": {
+        "prediction": "trfermikit.",
+        "retrieved_pmcids": [
+          "PMC8826174",
+          "PMC8826174",
+          "PMC8826174",
+          "PMC8826174",
+          "PMC7605252"
+        ],
+        "retrieval_latency": 0.005825996398925781,
+        "llm_latency": 11.719937086105347,
+        "exact_match": 1,
+        "rouge_l_f1": 0.022727272727272724,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "trfermikit",
+        "retrieved_pmcids": [
+          "PMC8826174",
+          "PMC8826174",
+          "PMC8826174",
+          "PMC8826174",
+          "PMC8826174"
+        ],
+        "retrieval_latency": 0.3028678894042969,
+        "llm_latency": 11.655903100967407,
+        "exact_match": 1,
+        "rouge_l_f1": 0.022727272727272724,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which JASPAR release is JASPAR 2022?",
+      "exact_answer": [
+        "9th"
+      ],
+      "gold_pmcids": [
+        "PMC8728201"
+      ],
+      "pipeline_a": {
+        "prediction": "unanswerable",
+        "retrieved_pmcids": [
+          "PMC8728201",
+          "PMC8728201",
+          "PMC8728201",
+          "PMC8728201",
+          "PMC8728201"
+        ],
+        "retrieval_latency": 0.005464792251586914,
+        "llm_latency": 10.530137062072754,
+        "exact_match": 0,
+        "rouge_l_f1": 0.0,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "9th release",
+        "retrieved_pmcids": [
+          "PMC8728201",
+          "PMC8728201",
+          "PMC8728201",
+          "PMC8728201",
+          "PMC8728201"
+        ],
+        "retrieval_latency": 0.3068199157714844,
+        "llm_latency": 10.854318141937256,
+        "exact_match": 1,
+        "rouge_l_f1": 0.059701492537313446,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the function of R-spondin 1 and noggin in non-damaged gallbladders?",
+      "exact_answer": [
+        "The expansion of resident stem cells."
+      ],
+      "gold_pmcids": [
+        "PMC5341509"
+      ],
+      "pipeline_a": {
+        "prediction": "They facilitate the growth of resident stem cells from non-damaged gallbladders.",
+        "retrieved_pmcids": [
+          "PMC5341509",
+          "PMC5341509",
+          "PMC5341509",
+          "PMC5341509",
+          "PMC5341509"
+        ],
+        "retrieval_latency": 0.012441158294677734,
+        "llm_latency": 10.891786098480225,
+        "exact_match": 0,
+        "rouge_l_f1": 0.6666666666666665,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "They facilitate the growth of resident stem cells from non-damaged gallbladders.",
+        "retrieved_pmcids": [
+          "PMC5341509",
+          "PMC5341509",
+          "PMC5341509",
+          "PMC5341509",
+          "PMC5341509"
+        ],
+        "retrieval_latency": 0.3950169086456299,
+        "llm_latency": 11.048360824584961,
+        "exact_match": 0,
+        "rouge_l_f1": 0.6666666666666665,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Through which molecular pathway does LB-100 reduce hepatic steatosis?",
+      "exact_answer": [
+        "AMPK/Sirt1 pathway"
+      ],
+      "gold_pmcids": [
+        "PMC6906208"
+      ],
+      "pipeline_a": {
+        "prediction": "The AMPK/Sirt1 signaling pathway.",
+        "retrieved_pmcids": [
+          "PMC6906208",
+          "PMC6906208",
+          "PMC6906208",
+          "PMC6906208",
+          "PMC6906208"
+        ],
+        "retrieval_latency": 0.005944013595581055,
+        "llm_latency": 13.119437217712402,
+        "exact_match": 0,
+        "rouge_l_f1": 0.3076923076923077,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "The AMPK/Sirt1 signaling pathway.",
+        "retrieved_pmcids": [
+          "PMC6906208",
+          "PMC6906208",
+          "PMC6906208",
+          "PMC6906208",
+          "PMC6906208"
+        ],
+        "retrieval_latency": 0.3159341812133789,
+        "llm_latency": 13.1686429977417,
+        "exact_match": 0,
+        "rouge_l_f1": 0.3076923076923077,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which receptor does amantadine antagonize?",
+      "exact_answer": [
+        "NMDA"
+      ],
+      "gold_pmcids": [
+        "PMC5018158"
+      ],
+      "pipeline_a": {
+        "prediction": "NMDA receptor",
+        "retrieved_pmcids": [
+          "PMC5018158",
+          "PMC5018158",
+          "PMC5018158",
+          "PMC5018158",
+          "PMC5018158"
+        ],
+        "retrieval_latency": 0.004441976547241211,
+        "llm_latency": 10.662613868713379,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2222222222222222,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "NMDA",
+        "retrieved_pmcids": [
+          "PMC5018158",
+          "PMC5018158",
+          "PMC5018158",
+          "PMC5018158",
+          "PMC5018158"
+        ],
+        "retrieval_latency": 0.27612781524658203,
+        "llm_latency": 9.408472061157227,
+        "exact_match": 1,
+        "rouge_l_f1": 0.11764705882352941,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which R/bioconductor package utilizes the Hilbert curve in order to visualize genomic data?",
+      "exact_answer": [
+        "HilbertVis"
+      ],
+      "gold_pmcids": [
+        "PMC2677744"
+      ],
+      "pipeline_a": {
+        "prediction": "HilbertVis' (for interactive exploration) and HilbertVisGUI' (for batch processing) are part of the Bioconductor project and utilize the Hilbert curve.",
+        "retrieved_pmcids": [
+          "PMC2677744",
+          "PMC2677744",
+          "PMC2677744",
+          "PMC5860605",
+          "PMC2677744"
+        ],
+        "retrieval_latency": 0.007950782775878906,
+        "llm_latency": 10.59317922592163,
+        "exact_match": 1,
+        "rouge_l_f1": 0.12121212121212122,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "HilbertVis (and possibly GenomeGraphs)",
+        "retrieved_pmcids": [
+          "PMC2677744",
+          "PMC2677744",
+          "PMC2677744",
+          "PMC2677744",
+          "PMC5860605"
+        ],
+        "retrieval_latency": 0.3538808822631836,
+        "llm_latency": 9.783905982971191,
+        "exact_match": 1,
+        "rouge_l_f1": 0.08,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which package in Bioconductor has been developed with the aim to analyze differential DNA loops from sequencing data?",
+      "exact_answer": [
+        "Diffloop"
+      ],
+      "gold_pmcids": [
+        "PMC5860605"
+      ],
+      "pipeline_a": {
+        "prediction": "diffloop",
+        "retrieved_pmcids": [
+          "PMC5860605",
+          "PMC5860605",
+          "PMC5860605",
+          "PMC5860605",
+          "PMC7605252"
+        ],
+        "retrieval_latency": 0.008849859237670898,
+        "llm_latency": 10.450043201446533,
+        "exact_match": 1,
+        "rouge_l_f1": 1.0,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "diffloop",
+        "retrieved_pmcids": [
+          "PMC5860605",
+          "PMC5860605",
+          "PMC5860605",
+          "PMC5860605",
+          "PMC7605252"
+        ],
+        "retrieval_latency": 0.317263126373291,
+        "llm_latency": 10.388680934906006,
+        "exact_match": 1,
+        "rouge_l_f1": 1.0,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the trade name of sildenafil?",
+      "exact_answer": [
+        "Viagra"
+      ],
+      "gold_pmcids": [
+        "PMC4354216"
+      ],
+      "pipeline_a": {
+        "prediction": "Viagra",
+        "retrieved_pmcids": [
+          "PMC4354216",
+          "PMC4354216",
+          "PMC3531063",
+          "PMC4344527",
+          "PMC3531063"
+        ],
+        "retrieval_latency": 0.0053369998931884766,
+        "llm_latency": 10.323535203933716,
+        "exact_match": 1,
+        "rouge_l_f1": 0.25,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Viagra",
+        "retrieved_pmcids": [
+          "PMC4354216",
+          "PMC4354216",
+          "PMC9185762",
+          "PMC9164935",
+          "PMC9164935"
+        ],
+        "retrieval_latency": 0.31125903129577637,
+        "llm_latency": 9.961660861968994,
+        "exact_match": 1,
+        "rouge_l_f1": 0.25,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "When was vivotif first licenced in Europe?",
+      "exact_answer": [
+        "1983"
+      ],
+      "gold_pmcids": [
+        "PMC5432773"
+      ],
+      "pipeline_a": {
+        "prediction": "1983.",
+        "retrieved_pmcids": [
+          "PMC5432773",
+          "PMC6567042",
+          "PMC5432773",
+          "PMC5432773",
+          "PMC6567042"
+        ],
+        "retrieval_latency": 0.005342960357666016,
+        "llm_latency": 9.331361055374146,
+        "exact_match": 1,
+        "rouge_l_f1": 0.18181818181818182,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "1983",
+        "retrieved_pmcids": [
+          "PMC5432773",
+          "PMC5432773",
+          "PMC5432773",
+          "PMC5432773",
+          "PMC8611132"
+        ],
+        "retrieval_latency": 0.3161451816558838,
+        "llm_latency": 9.518961906433105,
+        "exact_match": 1,
+        "rouge_l_f1": 0.18181818181818182,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What types of DMD can eteplirsen be used for?",
+      "exact_answer": [
+        "exon-51 amenable genetic mutations",
+        "exon 51-amenable patients"
+      ],
+      "gold_pmcids": [
+        "PMC8385516",
+        "PMC8842766"
+      ],
+      "pipeline_a": {
+        "prediction": "Mutations amenable to exon-51 skipping.",
+        "retrieved_pmcids": [
+          "PMC8842766",
+          "PMC8842766",
+          "PMC8842766",
+          "PMC8842766",
+          "PMC8842766"
+        ],
+        "retrieval_latency": 0.005757331848144531,
+        "llm_latency": 10.190317869186401,
+        "exact_match": 0,
+        "rouge_l_f1": 0.631578947368421,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5
+      },
+      "pipeline_b": {
+        "prediction": "Mutations amenable to exon-51 skipping.",
+        "retrieved_pmcids": [
+          "PMC8842766",
+          "PMC8842766",
+          "PMC8842766",
+          "PMC8842766",
+          "PMC8385516"
+        ],
+        "retrieval_latency": 0.3072187900543213,
+        "llm_latency": 9.745290040969849,
+        "exact_match": 0,
+        "rouge_l_f1": 0.631578947368421,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which R package is used for the detection of chromosomal abnormalities from microarray data?",
+      "exact_answer": [
+        "CAFE"
+      ],
+      "gold_pmcids": [
+        "PMC4016701"
+      ],
+      "pipeline_a": {
+        "prediction": "CAFE (Chromosomal Aberration Finder in Expression Data)",
+        "retrieved_pmcids": [
+          "PMC4016701",
+          "PMC4016701",
+          "PMC4016701",
+          "PMC4016701",
+          "PMC4016701"
+        ],
+        "retrieval_latency": 0.011920928955078125,
+        "llm_latency": 10.111882209777832,
+        "exact_match": 1,
+        "rouge_l_f1": 0.3333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "CAFE (Chromosomal Aberration Finder in Expression Data)",
+        "retrieved_pmcids": [
+          "PMC4016701",
+          "PMC4016701",
+          "PMC4016701",
+          "PMC4016701",
+          "PMC4016701"
+        ],
+        "retrieval_latency": 0.32172107696533203,
+        "llm_latency": 9.901709079742432,
+        "exact_match": 1,
+        "rouge_l_f1": 0.3333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "In which chromosome are transgenes inserted in the case of the LiPS-A3S line?",
+      "exact_answer": [
+        "Chromosome 15"
+      ],
+      "gold_pmcids": [
+        "PMC5155331"
+      ],
+      "pipeline_a": {
+        "prediction": "15",
+        "retrieved_pmcids": [
+          "PMC5155331",
+          "PMC5155331",
+          "PMC5155331",
+          "PMC5155331",
+          "PMC5155331"
+        ],
+        "retrieval_latency": 0.016186952590942383,
+        "llm_latency": 10.52205204963684,
+        "exact_match": 0,
+        "rouge_l_f1": 0.13333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "15",
+        "retrieved_pmcids": [
+          "PMC5155331",
+          "PMC5155331",
+          "PMC5155331",
+          "PMC5155331",
+          "PMC5155331"
+        ],
+        "retrieval_latency": 0.31673479080200195,
+        "llm_latency": 10.355781078338623,
+        "exact_match": 0,
+        "rouge_l_f1": 0.13333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which database exists that contains regulatory SNPs which affect predicted transcription factor binding site affinity?",
+      "exact_answer": [
+        "SNP2TFBS"
+      ],
+      "gold_pmcids": [
+        "PMC5210548"
+      ],
+      "pipeline_a": {
+        "prediction": "SNP2TFBS.",
+        "retrieved_pmcids": [
+          "PMC5210548",
+          "PMC5210548",
+          "PMC5210548",
+          "PMC5210548",
+          "PMC5210548"
+        ],
+        "retrieval_latency": 0.007362842559814453,
+        "llm_latency": 9.132874250411987,
+        "exact_match": 1,
+        "rouge_l_f1": 0.03278688524590164,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "SNP2TFBS",
+        "retrieved_pmcids": [
+          "PMC5210548",
+          "PMC5210548",
+          "PMC5210548",
+          "PMC5210548",
+          "PMC5210548"
+        ],
+        "retrieval_latency": 0.32369518280029297,
+        "llm_latency": 9.625959873199463,
+        "exact_match": 1,
+        "rouge_l_f1": 0.03278688524590164,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the nucleotide composition of the Lamin Associated Domains (LADs)?",
+      "exact_answer": [
+        "A/T rich sequences"
+      ],
+      "gold_pmcids": [
+        "PMC3561868"
+      ],
+      "pipeline_a": {
+        "prediction": "A/T-rich sequences",
+        "retrieved_pmcids": [
+          "PMC3561868",
+          "PMC3561868",
+          "PMC3561868",
+          "PMC3561868",
+          "PMC3561868"
+        ],
+        "retrieval_latency": 0.0076448917388916016,
+        "llm_latency": 9.674357891082764,
+        "exact_match": 0,
+        "rouge_l_f1": 0.4210526315789474,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "A/T-rich sequences",
+        "retrieved_pmcids": [
+          "PMC3561868",
+          "PMC3561868",
+          "PMC3561868",
+          "PMC3561868",
+          "PMC3561868"
+        ],
+        "retrieval_latency": 0.31090688705444336,
+        "llm_latency": 9.494342803955078,
+        "exact_match": 0,
+        "rouge_l_f1": 0.4210526315789474,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What does the pembrolizumab companion diagnostic test assess?",
+      "exact_answer": [
+        "PD-L1 status"
+      ],
+      "gold_pmcids": [
+        "PMC5342609"
+      ],
+      "pipeline_a": {
+        "prediction": "PD-L1 status of patients.",
+        "retrieved_pmcids": [
+          "PMC5342609",
+          "PMC5342609",
+          "PMC5342609",
+          "PMC5342609",
+          "PMC5342609"
+        ],
+        "retrieval_latency": 0.005913972854614258,
+        "llm_latency": 10.193901062011719,
+        "exact_match": 1,
+        "rouge_l_f1": 0.5,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "PD-L1 status of patients",
+        "retrieved_pmcids": [
+          "PMC5342609",
+          "PMC5342609",
+          "PMC5342609",
+          "PMC5342609",
+          "PMC5342609"
+        ],
+        "retrieval_latency": 0.3063168525695801,
+        "llm_latency": 10.970880031585693,
+        "exact_match": 1,
+        "rouge_l_f1": 0.5,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the mode of administration of AZD8601?",
+      "exact_answer": [
+        "Intradermal"
+      ],
+      "gold_pmcids": [
+        "PMC7376292"
+      ],
+      "pipeline_a": {
+        "prediction": "Intradermal injection.",
+        "retrieved_pmcids": [
+          "PMC7376292",
+          "PMC7376292",
+          "PMC7376292",
+          "PMC7376292",
+          "PMC7376292"
+        ],
+        "retrieval_latency": 0.005780935287475586,
+        "llm_latency": 8.950978994369507,
+        "exact_match": 1,
+        "rouge_l_f1": 0.3333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Intradermal injections.",
+        "retrieved_pmcids": [
+          "PMC7376292",
+          "PMC7376292",
+          "PMC7376292",
+          "PMC7376292",
+          "PMC7376292"
+        ],
+        "retrieval_latency": 0.314133882522583,
+        "llm_latency": 9.16764497756958,
+        "exact_match": 1,
+        "rouge_l_f1": 0.3333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which was  the first oral drug for the treatment of multiple sclerosis by the US Food and Drug Administration (FDA)?",
+      "exact_answer": [
+        "FTY720",
+        "Fingolimod"
+      ],
+      "gold_pmcids": [
+        "PMC7403647"
+      ],
+      "pipeline_a": {
+        "prediction": "FTY720 (Fingolimod)",
+        "retrieved_pmcids": [
+          "PMC9164935",
+          "PMC7403647",
+          "PMC9345835",
+          "PMC4507456",
+          "PMC9150264"
+        ],
+        "retrieval_latency": 0.011092901229858398,
+        "llm_latency": 10.760641813278198,
+        "exact_match": 1,
+        "rouge_l_f1": 0.14814814814814814,
+        "hit_rate_1": 0,
+        "hit_rate_3": 1,
+        "recall_1": 0.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "FTY720 (Fingolimod)",
+        "retrieved_pmcids": [
+          "PMC7403647",
+          "PMC7403647",
+          "PMC6208769",
+          "PMC7403647",
+          "PMC6208769"
+        ],
+        "retrieval_latency": 0.3242170810699463,
+        "llm_latency": 11.62691593170166,
+        "exact_match": 1,
+        "rouge_l_f1": 0.14814814814814814,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which is the database of somatic mutations in normal cells?",
+      "exact_answer": [
+        "DSMNC",
+        "Database of Somatic Mutations in Normal Cells"
+      ],
+      "gold_pmcids": [
+        "PMC6323907"
+      ],
+      "pipeline_a": {
+        "prediction": "DSMNC.",
+        "retrieved_pmcids": [
+          "PMC6323907",
+          "PMC6323907",
+          "PMC6323907",
+          "PMC6323907",
+          "PMC6323907"
+        ],
+        "retrieval_latency": 0.006067037582397461,
+        "llm_latency": 10.087811708450317,
+        "exact_match": 1,
+        "rouge_l_f1": 0.0273972602739726,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "DSMNC.",
+        "retrieved_pmcids": [
+          "PMC6323907",
+          "PMC6323907",
+          "PMC6323907",
+          "PMC6323907",
+          "PMC6323907"
+        ],
+        "retrieval_latency": 0.3201439380645752,
+        "llm_latency": 10.29367709159851,
+        "exact_match": 1,
+        "rouge_l_f1": 0.0273972602739726,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which disease can be treated with Anifrolumab?",
+      "exact_answer": [
+        "systemic lupus erythematosus"
+      ],
+      "gold_pmcids": [
+        "PMC5909750",
+        "PMC6280909",
+        "PMC5299497",
+        "PMC5890854",
+        "PMC5890856"
+      ],
+      "pipeline_a": {
+        "prediction": "Systemic Lupus Erythematosus (SLE)",
+        "retrieved_pmcids": [
+          "PMC6280909",
+          "PMC6280909",
+          "PMC5890854",
+          "PMC6280909",
+          "PMC5299497"
+        ],
+        "retrieval_latency": 0.00564122200012207,
+        "llm_latency": 13.613219976425171,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.2,
+        "recall_3": 0.4
+      },
+      "pipeline_b": {
+        "prediction": "Systemic Lupus Erythematosus (SLE)",
+        "retrieved_pmcids": [
+          "PMC5890854",
+          "PMC5299497",
+          "PMC6280909",
+          "PMC5299497",
+          "PMC5299497"
+        ],
+        "retrieval_latency": 0.29708194732666016,
+        "llm_latency": 13.110689163208008,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.2,
+        "recall_3": 0.6,
+        "page_hit_rate": 1,
+        "page_recall": 0.8
+      }
+    },
+    {
+      "question": "Which cell secretes the enzyme tryptase?",
+      "exact_answer": [
+        "Mast cells"
+      ],
+      "gold_pmcids": [
+        "PMC6933056",
+        "PMC6913652"
+      ],
+      "pipeline_a": {
+        "prediction": "Mast cells.",
+        "retrieved_pmcids": [
+          "PMC6933056",
+          "PMC6913652",
+          "PMC4214238",
+          "PMC6933056",
+          "PMC6933056"
+        ],
+        "retrieval_latency": 0.0064220428466796875,
+        "llm_latency": 11.297499895095825,
+        "exact_match": 1,
+        "rouge_l_f1": 0.18181818181818182,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Mast cells.",
+        "retrieved_pmcids": [
+          "PMC6933056",
+          "PMC6913652",
+          "PMC6933056",
+          "PMC6933056",
+          "PMC6913652"
+        ],
+        "retrieval_latency": 0.27415919303894043,
+        "llm_latency": 13.93151068687439,
+        "exact_match": 1,
+        "rouge_l_f1": 0.18181818181818182,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which disease is treated with Nusinersen?",
+      "exact_answer": [
+        "Spinal Muscular Atrophy",
+        "SMA"
+      ],
+      "gold_pmcids": [
+        "PMC4871174",
+        "PMC4782111"
+      ],
+      "pipeline_a": {
+        "prediction": "Spinal muscular atrophy (SMA)",
+        "retrieved_pmcids": [
+          "PMC4871174",
+          "PMC4782111",
+          "PMC4782111",
+          "PMC4871174",
+          "PMC4782111"
+        ],
+        "retrieval_latency": 0.007359027862548828,
+        "llm_latency": 11.293862104415894,
+        "exact_match": 1,
+        "rouge_l_f1": 0.46153846153846156,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Spinal muscular atrophy.",
+        "retrieved_pmcids": [
+          "PMC4871174",
+          "PMC4782111",
+          "PMC4871174",
+          "PMC4782111",
+          "PMC4782111"
+        ],
+        "retrieval_latency": 0.2883009910583496,
+        "llm_latency": 11.55069899559021,
+        "exact_match": 1,
+        "rouge_l_f1": 0.5,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the generic name for Imfinzi?",
+      "exact_answer": [
+        "Durvalumab"
+      ],
+      "gold_pmcids": [
+        "PMC7394305",
+        "PMC5636860",
+        "PMC8648650"
+      ],
+      "pipeline_a": {
+        "prediction": "durvalumab",
+        "retrieved_pmcids": [
+          "PMC3531063",
+          "PMC8648650",
+          "PMC4344527",
+          "PMC3531063",
+          "PMC7214662"
+        ],
+        "retrieval_latency": 0.006548881530761719,
+        "llm_latency": 10.600286960601807,
+        "exact_match": 1,
+        "rouge_l_f1": 0.6666666666666666,
+        "hit_rate_1": 0,
+        "hit_rate_3": 1,
+        "recall_1": 0.0,
+        "recall_3": 0.3333333333333333
+      },
+      "pipeline_b": {
+        "prediction": "Durvalumab",
+        "retrieved_pmcids": [
+          "PMC8648650",
+          "PMC8648650",
+          "PMC8648650",
+          "PMC8648650",
+          "PMC8648650"
+        ],
+        "retrieval_latency": 0.2919158935546875,
+        "llm_latency": 11.470622062683105,
+        "exact_match": 1,
+        "rouge_l_f1": 0.6666666666666666,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.3333333333333333,
+        "recall_3": 0.3333333333333333,
+        "page_hit_rate": 1,
+        "page_recall": 0.3333333333333333
+      }
+    },
+    {
+      "question": "What is the mode of administration of Ubrogepant?",
+      "exact_answer": [
+        "oral"
+      ],
+      "gold_pmcids": [
+        "PMC6900570",
+        "PMC7214647",
+        "PMC7214662"
+      ],
+      "pipeline_a": {
+        "prediction": "Oral",
+        "retrieved_pmcids": [
+          "PMC7214647",
+          "PMC7214662",
+          "PMC7214647",
+          "PMC7214662",
+          "PMC7214647"
+        ],
+        "retrieval_latency": 0.0062291622161865234,
+        "llm_latency": 10.310504913330078,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.3333333333333333,
+        "recall_3": 0.6666666666666666
+      },
+      "pipeline_b": {
+        "prediction": "oral",
+        "retrieved_pmcids": [
+          "PMC7214662",
+          "PMC7214647",
+          "PMC7214662",
+          "PMC7214647",
+          "PMC7214647"
+        ],
+        "retrieval_latency": 0.30074501037597656,
+        "llm_latency": 9.758742094039917,
+        "exact_match": 1,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.3333333333333333,
+        "recall_3": 0.6666666666666666,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which receptor is targeted by Spesolimab?",
+      "exact_answer": [
+        "interleukin-36"
+      ],
+      "gold_pmcids": [
+        "PMC8611132",
+        "PMC8019016",
+        "PMC8011793",
+        "PMC7439281"
+      ],
+      "pipeline_a": {
+        "prediction": "IL-36R (Interleukin-36 receptor)",
+        "retrieved_pmcids": [
+          "PMC8611132",
+          "PMC8011793",
+          "PMC8019016",
+          "PMC8019016",
+          "PMC8019016"
+        ],
+        "retrieval_latency": 0.009779930114746094,
+        "llm_latency": 10.943764925003052,
+        "exact_match": 1,
+        "rouge_l_f1": 0.42857142857142855,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.25,
+        "recall_3": 0.75
+      },
+      "pipeline_b": {
+        "prediction": "IL-36 receptor",
+        "retrieved_pmcids": [
+          "PMC8019016",
+          "PMC8019016",
+          "PMC8019016",
+          "PMC8011793",
+          "PMC7439281"
+        ],
+        "retrieval_latency": 0.28370094299316406,
+        "llm_latency": 10.262861013412476,
+        "exact_match": 0,
+        "rouge_l_f1": 0.3333333333333333,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.25,
+        "recall_3": 0.25,
+        "page_hit_rate": 1,
+        "page_recall": 0.75
+      }
+    },
+    {
+      "question": "Bimekizumab is used for treatment of which disease?",
+      "exact_answer": [
+        "psoriasis"
+      ],
+      "gold_pmcids": [
+        "PMC7955739",
+        "PMC8484391",
+        "PMC5401985",
+        "PMC8478739",
+        "PMC6538010",
+        "PMC9303624",
+        "PMC8366125",
+        "PMC8195566"
+      ],
+      "pipeline_a": {
+        "prediction": "Moderate-to-severe psoriasis and psoriatic arthritis.",
+        "retrieved_pmcids": [
+          "PMC8195566",
+          "PMC8195566",
+          "PMC9303624",
+          "PMC7955739",
+          "PMC5401985"
+        ],
+        "retrieval_latency": 0.006031036376953125,
+        "llm_latency": 11.35346508026123,
+        "exact_match": 1,
+        "rouge_l_f1": 0.16666666666666666,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.125,
+        "recall_3": 0.25
+      },
+      "pipeline_b": {
+        "prediction": "Psoriasis and psoriatic arthritis.",
+        "retrieved_pmcids": [
+          "PMC8195566",
+          "PMC8366125",
+          "PMC7955739",
+          "PMC8195566",
+          "PMC8366125"
+        ],
+        "retrieval_latency": 0.2995319366455078,
+        "llm_latency": 11.844040870666504,
+        "exact_match": 1,
+        "rouge_l_f1": 0.22222222222222224,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.125,
+        "recall_3": 0.375,
+        "page_hit_rate": 1,
+        "page_recall": 0.375
+      }
+    },
+    {
+      "question": "Which is the enzyme that degrades decapped mRNAs?",
+      "exact_answer": [
+        "XRN1"
+      ],
+      "gold_pmcids": [
+        "PMC4005699"
+      ],
+      "pipeline_a": {
+        "prediction": "XRN1.",
+        "retrieved_pmcids": [
+          "PMC4005699",
+          "PMC4005699",
+          "PMC4344527",
+          "PMC4005699",
+          "PMC4005699"
+        ],
+        "retrieval_latency": 0.006518840789794922,
+        "llm_latency": 13.419459104537964,
+        "exact_match": 1,
+        "rouge_l_f1": 0.0625,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "XRN1.",
+        "retrieved_pmcids": [
+          "PMC4005699",
+          "PMC4005699",
+          "PMC4005699",
+          "PMC4005699",
+          "PMC4005699"
+        ],
+        "retrieval_latency": 0.30295777320861816,
+        "llm_latency": 14.894083023071289,
+        "exact_match": 1,
+        "rouge_l_f1": 0.0625,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which is the protein encoded by the human gene GRIK?",
+      "exact_answer": [
+        "glutamate receptor ionotropic kainate"
+      ],
+      "gold_pmcids": [
+        "PMC3249828"
+      ],
+      "pipeline_a": {
+        "prediction": "unanswerable",
+        "retrieved_pmcids": [
+          "PMC6030881",
+          "PMC5800811",
+          "PMC2188909",
+          "PMC4929874",
+          "PMC4929874"
+        ],
+        "retrieval_latency": 0.006276130676269531,
+        "llm_latency": 11.434396982192993,
+        "exact_match": 0,
+        "rouge_l_f1": 0.0,
+        "hit_rate_1": 0,
+        "hit_rate_3": 0,
+        "recall_1": 0.0,
+        "recall_3": 0.0
+      },
+      "pipeline_b": {
+        "prediction": "unanswerable",
+        "retrieved_pmcids": [
+          "PMC2188909",
+          "PMC5800811",
+          "PMC2188909",
+          "PMC5800811",
+          "PMC5800811"
+        ],
+        "retrieval_latency": 0.2877781391143799,
+        "llm_latency": 11.142108917236328,
+        "exact_match": 0,
+        "rouge_l_f1": 0.0,
+        "hit_rate_1": 0,
+        "hit_rate_3": 0,
+        "recall_1": 0.0,
+        "recall_3": 0.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the human RCA locus size in bps?",
+      "exact_answer": [
+        "300kbp"
+      ],
+      "gold_pmcids": [
+        "PMC2189239",
+        "PMC2188909"
+      ],
+      "pipeline_a": {
+        "prediction": "750 kb",
+        "retrieved_pmcids": [
+          "PMC2188909",
+          "PMC2189239",
+          "PMC2188909",
+          "PMC2188909",
+          "PMC2189239"
+        ],
+        "retrieval_latency": 0.006929159164428711,
+        "llm_latency": 9.791462898254395,
+        "exact_match": 0,
+        "rouge_l_f1": 0.2222222222222222,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "1,500 kb",
+        "retrieved_pmcids": [
+          "PMC2188909",
+          "PMC2188909",
+          "PMC2188909",
+          "PMC2188909",
+          "PMC2188909"
+        ],
+        "retrieval_latency": 0.2810492515563965,
+        "llm_latency": 9.87962794303894,
+        "exact_match": 0,
+        "rouge_l_f1": 0.21052631578947367,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 0.5
+      }
+    },
+    {
+      "question": "Talquetamab was developed for treatment of which disease?",
+      "exact_answer": [
+        "multiple myeloma"
+      ],
+      "gold_pmcids": [
+        "PMC9979748"
+      ],
+      "pipeline_a": {
+        "prediction": "Multiple myeloma.",
+        "retrieved_pmcids": [
+          "PMC9979748",
+          "PMC9979748",
+          "PMC9979748",
+          "PMC9979748",
+          "PMC4507456"
+        ],
+        "retrieval_latency": 0.006174325942993164,
+        "llm_latency": 11.829570770263672,
+        "exact_match": 1,
+        "rouge_l_f1": 0.4,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Multiple myeloma",
+        "retrieved_pmcids": [
+          "PMC9979748",
+          "PMC9979748",
+          "PMC9979748",
+          "PMC9979748",
+          "PMC9979748"
+        ],
+        "retrieval_latency": 0.2936520576477051,
+        "llm_latency": 12.09581995010376,
+        "exact_match": 1,
+        "rouge_l_f1": 0.4,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the function of the protein encoded by the gene NKCC2?",
+      "exact_answer": [
+        "This protein functions as an Na-K-Cl cotransporter."
+      ],
+      "gold_pmcids": [
+        "PMC5893140",
+        "PMC6113003"
+      ],
+      "pipeline_a": {
+        "prediction": "Coupled transport of Na+, K+ and Cl- ions in the ratio of 1:1:2.",
+        "retrieved_pmcids": [
+          "PMC5893140",
+          "PMC6030881",
+          "PMC5893140",
+          "PMC2188909",
+          "PMC9303624"
+        ],
+        "retrieval_latency": 0.006628751754760742,
+        "llm_latency": 10.511101961135864,
+        "exact_match": 0,
+        "rouge_l_f1": 0.25,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5
+      },
+      "pipeline_b": {
+        "prediction": "Mediates coupled transport of Na+, K+ and Cl-ions in the ratio of 1:1:2.",
+        "retrieved_pmcids": [
+          "PMC5893140",
+          "PMC5893140",
+          "PMC5893140",
+          "PMC5893140",
+          "PMC5893140"
+        ],
+        "retrieval_latency": 0.313460111618042,
+        "llm_latency": 10.971044063568115,
+        "exact_match": 0,
+        "rouge_l_f1": 0.24000000000000005,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 0.5
+      }
+    },
+    {
+      "question": "What disease can be treated with Teclistamab?",
+      "exact_answer": [
+        "Multiple Myeloma"
+      ],
+      "gold_pmcids": [
+        "PMC9345835"
+      ],
+      "pipeline_a": {
+        "prediction": "Multiple Myeloma (MM)",
+        "retrieved_pmcids": [
+          "PMC9345835",
+          "PMC9345835",
+          "PMC9979748",
+          "PMC9345835",
+          "PMC9345835"
+        ],
+        "retrieval_latency": 0.006165981292724609,
+        "llm_latency": 10.36487889289856,
+        "exact_match": 1,
+        "rouge_l_f1": 0.4,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Multiple myeloma (MM)",
+        "retrieved_pmcids": [
+          "PMC9345835",
+          "PMC9979748",
+          "PMC9345835",
+          "PMC9979748",
+          "PMC9979748"
+        ],
+        "retrieval_latency": 0.30493783950805664,
+        "llm_latency": 11.601683139801025,
+        "exact_match": 1,
+        "rouge_l_f1": 0.4,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the incidence of Facioscapulohumeral Muscular Dystrophy?",
+      "exact_answer": [
+        "1:8000 to 1:20000"
+      ],
+      "gold_pmcids": [
+        "PMC9185762"
+      ],
+      "pipeline_a": {
+        "prediction": "1:8000",
+        "retrieved_pmcids": [
+          "PMC9185762",
+          "PMC9185762",
+          "PMC9185762",
+          "PMC9185762",
+          "PMC9185762"
+        ],
+        "retrieval_latency": 0.005530118942260742,
+        "llm_latency": 14.795439958572388,
+        "exact_match": 0,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "1:8000",
+        "retrieved_pmcids": [
+          "PMC9185762",
+          "PMC9185762",
+          "PMC9185762",
+          "PMC9185762",
+          "PMC9185762"
+        ],
+        "retrieval_latency": 0.31859612464904785,
+        "llm_latency": 16.47567892074585,
+        "exact_match": 0,
+        "rouge_l_f1": 0.2857142857142857,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Olokizumab is tested for which disease?",
+      "exact_answer": [
+        "rheumatoid arthritis"
+      ],
+      "gold_pmcids": [
+        "PMC8921576"
+      ],
+      "pipeline_a": {
+        "prediction": "Rheumatoid arthritis (RA) and psoriasis.",
+        "retrieved_pmcids": [
+          "PMC8921576",
+          "PMC8921576",
+          "PMC8921576",
+          "PMC8366125",
+          "PMC6567042"
+        ],
+        "retrieval_latency": 0.0064678192138671875,
+        "llm_latency": 11.112509965896606,
+        "exact_match": 1,
+        "rouge_l_f1": 0.23529411764705882,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Rheumatoid arthritis (RA)",
+        "retrieved_pmcids": [
+          "PMC8921576",
+          "PMC8921576",
+          "PMC8366125",
+          "PMC8921576",
+          "PMC8366125"
+        ],
+        "retrieval_latency": 0.2916240692138672,
+        "llm_latency": 10.335904121398926,
+        "exact_match": 1,
+        "rouge_l_f1": 0.26666666666666666,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is DILI-CAT used for?",
+      "exact_answer": [
+        "Drug induced hepatotoxicity scoring algorithm"
+      ],
+      "gold_pmcids": [
+        "PMC9164935"
+      ],
+      "pipeline_a": {
+        "prediction": "Drug-induced liver injury causality assessment tool (DILI-CAT) is a clinically intuitive, data-driven, computer-assisted scoring algorithm used to identify and quantify drug-specific phenotypes of hepatotoxicity in clinical trials.",
+        "retrieved_pmcids": [
+          "PMC9164935",
+          "PMC9164935",
+          "PMC9164935",
+          "PMC9164935",
+          "PMC9164935"
+        ],
+        "retrieval_latency": 0.004849910736083984,
+        "llm_latency": 11.756772756576538,
+        "exact_match": 0,
+        "rouge_l_f1": 0.5517241379310345,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Early detection of drug's hepatotoxicity in clinical drug development.",
+        "retrieved_pmcids": [
+          "PMC9164935",
+          "PMC9164935",
+          "PMC9164935",
+          "PMC9164935",
+          "PMC9164935"
+        ],
+        "retrieval_latency": 0.2806720733642578,
+        "llm_latency": 10.632277965545654,
+        "exact_match": 0,
+        "rouge_l_f1": 0.5555555555555556,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "How are ultraconserved elements called when they form clusters?",
+      "exact_answer": [
+        "gene regulatory blocks (GRBs)"
+      ],
+      "gold_pmcids": [
+        "PMC3531063"
+      ],
+      "pipeline_a": {
+        "prediction": "genomic regulatory blocks' or GRBs.",
+        "retrieved_pmcids": [
+          "PMC3531063",
+          "PMC3531063",
+          "PMC3531063",
+          "PMC2677744",
+          "PMC2677744"
+        ],
+        "retrieval_latency": 0.005793094635009766,
+        "llm_latency": 9.974043130874634,
+        "exact_match": 0,
+        "rouge_l_f1": 0.15384615384615385,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "genomic regulatory blocks' or GRBs.",
+        "retrieved_pmcids": [
+          "PMC3531063",
+          "PMC3531063",
+          "PMC5918197",
+          "PMC3531063",
+          "PMC5918197"
+        ],
+        "retrieval_latency": 0.31672120094299316,
+        "llm_latency": 11.591484785079956,
+        "exact_match": 0,
+        "rouge_l_f1": 0.15384615384615385,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which protein is targeted by Herceptin?",
+      "exact_answer": [
+        "Her2"
+      ],
+      "gold_pmcids": [
+        "PMC7817806"
+      ],
+      "pipeline_a": {
+        "prediction": "ErbB2 (HER2)",
+        "retrieved_pmcids": [
+          "PMC7817806",
+          "PMC7817806",
+          "PMC7817806",
+          "PMC7817806",
+          "PMC7817806"
+        ],
+        "retrieval_latency": 0.007858991622924805,
+        "llm_latency": 12.499445915222168,
+        "exact_match": 1,
+        "rouge_l_f1": 0.28571428571428575,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "ErbB2 (also known as HER2)",
+        "retrieved_pmcids": [
+          "PMC7817806",
+          "PMC7817806",
+          "PMC7817806",
+          "PMC7817806",
+          "PMC7817806"
+        ],
+        "retrieval_latency": 0.2827610969543457,
+        "llm_latency": 12.894652843475342,
+        "exact_match": 1,
+        "rouge_l_f1": 0.20000000000000004,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the technique of choice to perform a caesarean section?",
+      "exact_answer": [
+        "Low transverse incision"
+      ],
+      "gold_pmcids": [
+        "PMC7396476"
+      ],
+      "pipeline_a": {
+        "prediction": "Laparotomy followed by hysterotomy with a low transverse incision is preferable.",
+        "retrieved_pmcids": [
+          "PMC7396476",
+          "PMC7396476",
+          "PMC7396476",
+          "PMC4016701",
+          "PMC7396476"
+        ],
+        "retrieval_latency": 0.00660395622253418,
+        "llm_latency": 11.118551015853882,
+        "exact_match": 1,
+        "rouge_l_f1": 0.6666666666666666,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Laparotomy followed by hysterotomy with a low transverse incision.",
+        "retrieved_pmcids": [
+          "PMC7396476",
+          "PMC7396476",
+          "PMC7396476",
+          "PMC7396476",
+          "PMC7396476"
+        ],
+        "retrieval_latency": 0.308258056640625,
+        "llm_latency": 9.992166996002197,
+        "exact_match": 1,
+        "rouge_l_f1": 0.6428571428571429,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which disease is associated with mutated Sox2?",
+      "exact_answer": [
+        "SOX2 anophthalmia syndrome"
+      ],
+      "gold_pmcids": [
+        "PMC4817771",
+        "PMC4929874"
+      ],
+      "pipeline_a": {
+        "prediction": "Anophthalmia/Microphthalmia (A/M)",
+        "retrieved_pmcids": [
+          "PMC4817771",
+          "PMC4817771",
+          "PMC4929874",
+          "PMC4817771",
+          "PMC4817771"
+        ],
+        "retrieval_latency": 0.010879993438720703,
+        "llm_latency": 11.643975019454956,
+        "exact_match": 0,
+        "rouge_l_f1": 0.10526315789473684,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Anophthalmia/Microphthalmia (A/M), Ocular Developmental Anomalies (ODA)",
+        "retrieved_pmcids": [
+          "PMC4817771",
+          "PMC4817771",
+          "PMC4929874",
+          "PMC4817771",
+          "PMC4817771"
+        ],
+        "retrieval_latency": 0.30025482177734375,
+        "llm_latency": 12.190172910690308,
+        "exact_match": 0,
+        "rouge_l_f1": 0.14285714285714285,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is Microcoring used for",
+      "exact_answer": [
+        "collogen induction",
+        "skin rejuvenation",
+        "enlarged pore removal"
+      ],
+      "gold_pmcids": [
+        "PMC9837470",
+        "PMC9575956",
+        "PMC8556055"
+      ],
+      "pipeline_a": {
+        "prediction": "Scarless skin removal.",
+        "retrieved_pmcids": [
+          "PMC8556055",
+          "PMC7214662",
+          "PMC8556055",
+          "PMC7214647",
+          "PMC7214662"
+        ],
+        "retrieval_latency": 0.0075910091400146484,
+        "llm_latency": 10.039638996124268,
+        "exact_match": 0,
+        "rouge_l_f1": 0.375,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.3333333333333333,
+        "recall_3": 0.3333333333333333
+      },
+      "pipeline_b": {
+        "prediction": "Skin rejuvenation and tightening, scarless skin removal, facial wrinkle treatment.",
+        "retrieved_pmcids": [
+          "PMC8556055",
+          "PMC8556055",
+          "PMC8556055",
+          "PMC9575956",
+          "PMC9837470"
+        ],
+        "retrieval_latency": 0.2963106632232666,
+        "llm_latency": 10.293030261993408,
+        "exact_match": 1,
+        "rouge_l_f1": 0.5217391304347826,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.3333333333333333,
+        "recall_3": 0.3333333333333333,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Where is base J found in the genome of Leishmania tarentolae?",
+      "exact_answer": [
+        "telomeric repeats"
+      ],
+      "gold_pmcids": [
+        "PMC4344527",
+        "PMC1874636",
+        "PMC2896530"
+      ],
+      "pipeline_a": {
+        "prediction": "99% in telomeric repeats.",
+        "retrieved_pmcids": [
+          "PMC4344527",
+          "PMC4344527",
+          "PMC4344527",
+          "PMC4344527",
+          "PMC1874636"
+        ],
+        "retrieval_latency": 0.00654292106628418,
+        "llm_latency": 10.738564014434814,
+        "exact_match": 1,
+        "rouge_l_f1": 0.18181818181818182,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.3333333333333333,
+        "recall_3": 0.3333333333333333
+      },
+      "pipeline_b": {
+        "prediction": "Telomeric repeats (99%) and in regions where transcription starts.",
+        "retrieved_pmcids": [
+          "PMC4344527",
+          "PMC1874636",
+          "PMC4344527",
+          "PMC4344527",
+          "PMC1874636"
+        ],
+        "retrieval_latency": 0.3094658851623535,
+        "llm_latency": 11.525569915771484,
+        "exact_match": 1,
+        "rouge_l_f1": 0.4736842105263158,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.3333333333333333,
+        "recall_3": 0.6666666666666666,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is a GPI anchor?",
+      "exact_answer": [
+        "Glycosylphosphatidylinositols (GPIs) are lipid anchors allowing the exposure of proteins at the outer layer of the plasma membrane."
+      ],
+      "gold_pmcids": [
+        "PMC5800811",
+        "PMC6080220"
+      ],
+      "pipeline_a": {
+        "prediction": "Post-translational modification that attaches soluble proteins to the external leaflet of the plasma membrane.",
+        "retrieved_pmcids": [
+          "PMC6080220",
+          "PMC6080220",
+          "PMC6080220",
+          "PMC6080220",
+          "PMC6080220"
+        ],
+        "retrieval_latency": 0.0043680667877197266,
+        "llm_latency": 10.508816957473755,
+        "exact_match": 0,
+        "rouge_l_f1": 0.29166666666666663,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5
+      },
+      "pipeline_b": {
+        "prediction": "Post-translational modification that attaches soluble proteins to the external leaflet of the plasma membrane.",
+        "retrieved_pmcids": [
+          "PMC6080220",
+          "PMC6080220",
+          "PMC6080220",
+          "PMC6080220",
+          "PMC6080220"
+        ],
+        "retrieval_latency": 0.2687239646911621,
+        "llm_latency": 10.510995149612427,
+        "exact_match": 0,
+        "rouge_l_f1": 0.29166666666666663,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which aminoacid position in the human CREB protein is phosphorylated?",
+      "exact_answer": [
+        "Ser133"
+      ],
+      "gold_pmcids": [
+        "PMC4995548"
+      ],
+      "pipeline_a": {
+        "prediction": "Ser-133.",
+        "retrieved_pmcids": [
+          "PMC4995548",
+          "PMC4995548",
+          "PMC4995548",
+          "PMC4995548",
+          "PMC4995548"
+        ],
+        "retrieval_latency": 0.0058307647705078125,
+        "llm_latency": 9.22138500213623,
+        "exact_match": 0,
+        "rouge_l_f1": 0.22222222222222224,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Ser-133.",
+        "retrieved_pmcids": [
+          "PMC4995548",
+          "PMC4995548",
+          "PMC4995548",
+          "PMC4995548",
+          "PMC4995548"
+        ],
+        "retrieval_latency": 0.27746105194091797,
+        "llm_latency": 9.1939377784729,
+        "exact_match": 0,
+        "rouge_l_f1": 0.22222222222222224,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What happens to H2AX upon DNA bouble strand breaks?",
+      "exact_answer": [
+        "it is rapidly concentrated"
+      ],
+      "gold_pmcids": [
+        "PMC4854117",
+        "PMC3159438"
+      ],
+      "pipeline_a": {
+        "prediction": "Phosphorylation occurs.",
+        "retrieved_pmcids": [
+          "PMC4854117",
+          "PMC4854117",
+          "PMC3159438",
+          "PMC3159438",
+          "PMC4854117"
+        ],
+        "retrieval_latency": 0.0058269500732421875,
+        "llm_latency": 13.136071920394897,
+        "exact_match": 0,
+        "rouge_l_f1": 0.058823529411764705,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Phosphorylation occurs.",
+        "retrieved_pmcids": [
+          "PMC4854117",
+          "PMC4854117",
+          "PMC3159438",
+          "PMC3159438",
+          "PMC4854117"
+        ],
+        "retrieval_latency": 0.3040146827697754,
+        "llm_latency": 13.119127035140991,
+        "exact_match": 0,
+        "rouge_l_f1": 0.058823529411764705,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which factor is inhibited by Milvexian?",
+      "exact_answer": [
+        "XIa"
+      ],
+      "gold_pmcids": [
+        "PMC8841437",
+        "PMC9299130"
+      ],
+      "pipeline_a": {
+        "prediction": "Factor Xla (FXla)",
+        "retrieved_pmcids": [
+          "PMC9299130",
+          "PMC9299130",
+          "PMC9299130",
+          "PMC9299130",
+          "PMC8841437"
+        ],
+        "retrieval_latency": 0.005218029022216797,
+        "llm_latency": 10.753841876983643,
+        "exact_match": 0,
+        "rouge_l_f1": 0.08695652173913045,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5
+      },
+      "pipeline_b": {
+        "prediction": "Factor Xla.",
+        "retrieved_pmcids": [
+          "PMC9299130",
+          "PMC9299130",
+          "PMC9299130",
+          "PMC8841437",
+          "PMC9299130"
+        ],
+        "retrieval_latency": 0.2802250385284424,
+        "llm_latency": 10.49103593826294,
+        "exact_match": 0,
+        "rouge_l_f1": 0.09090909090909091,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Inhaled Molgramostim can be used for treatment of which disease?",
+      "exact_answer": [
+        "Autoimmune Pulmonary Alveolar Proteinosis"
+      ],
+      "gold_pmcids": [
+        "PMC5925949"
+      ],
+      "pipeline_a": {
+        "prediction": "Autoimmune Pulmonary Alveolar Proteinosis (aPAP).",
+        "retrieved_pmcids": [
+          "PMC5925949",
+          "PMC5925949",
+          "PMC5925949",
+          "PMC5925949",
+          "PMC5925949"
+        ],
+        "retrieval_latency": 0.006997823715209961,
+        "llm_latency": 12.00985598564148,
+        "exact_match": 1,
+        "rouge_l_f1": 0.47058823529411764,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Autoimmune Pulmonary Alveolar Proteinosis (aPAP).",
+        "retrieved_pmcids": [
+          "PMC5925949",
+          "PMC5925949",
+          "PMC5925949",
+          "PMC5925949",
+          "PMC5925949"
+        ],
+        "retrieval_latency": 0.31261205673217773,
+        "llm_latency": 12.035023927688599,
+        "exact_match": 1,
+        "rouge_l_f1": 0.47058823529411764,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is a coligo?",
+      "exact_answer": [
+        "circularized oligodeoxynucleotides"
+      ],
+      "gold_pmcids": [
+        "PMC4214238"
+      ],
+      "pipeline_a": {
+        "prediction": "An RNA hairpin-encoding oligonucleotide.",
+        "retrieved_pmcids": [
+          "PMC4214238",
+          "PMC4214238",
+          "PMC4214238",
+          "PMC4214238",
+          "PMC4214238"
+        ],
+        "retrieval_latency": 0.0038449764251708984,
+        "llm_latency": 12.072161197662354,
+        "exact_match": 0,
+        "rouge_l_f1": 0.0,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "An RNA hairpin-encoding oligonucleotide.",
+        "retrieved_pmcids": [
+          "PMC4214238",
+          "PMC4214238",
+          "PMC4214238",
+          "PMC4214238",
+          "PMC4214238"
+        ],
+        "retrieval_latency": 0.2829921245574951,
+        "llm_latency": 12.114085912704468,
+        "exact_match": 0,
+        "rouge_l_f1": 0.0,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What does temsirolimus inhibit?",
+      "exact_answer": [
+        "mTOR"
+      ],
+      "gold_pmcids": [
+        "PMC8575558",
+        "PMC8476051"
+      ],
+      "pipeline_a": {
+        "prediction": "mTOR-inhibitor",
+        "retrieved_pmcids": [
+          "PMC9303624",
+          "PMC7214662",
+          "PMC2896530",
+          "PMC8476051",
+          "PMC8476051"
+        ],
+        "retrieval_latency": 0.004041910171508789,
+        "llm_latency": 10.330065965652466,
+        "exact_match": 1,
+        "rouge_l_f1": 0.5714285714285715,
+        "hit_rate_1": 0,
+        "hit_rate_3": 0,
+        "recall_1": 0.0,
+        "recall_3": 0.0
+      },
+      "pipeline_b": {
+        "prediction": "mTOR (mechanistic target of rapamycin)",
+        "retrieved_pmcids": [
+          "PMC8476051",
+          "PMC8476051",
+          "PMC8476051",
+          "PMC8575558",
+          "PMC8476051"
+        ],
+        "retrieval_latency": 0.3117949962615967,
+        "llm_latency": 11.56885814666748,
+        "exact_match": 1,
+        "rouge_l_f1": 0.20000000000000004,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "Which is the target of the drug Denosumab?",
+      "exact_answer": [
+        "receptor activator of nuclear factor-\u03baB ligand",
+        "RANKL"
+      ],
+      "gold_pmcids": [
+        "PMC4507456",
+        "PMC4610882"
+      ],
+      "pipeline_a": {
+        "prediction": "RANKL (Receptor activator of nuclear factor-\u03baB ligand)",
+        "retrieved_pmcids": [
+          "PMC4507456",
+          "PMC4507456",
+          "PMC4507456",
+          "PMC4507456",
+          "PMC4610882"
+        ],
+        "retrieval_latency": 0.005697011947631836,
+        "llm_latency": 10.012444257736206,
+        "exact_match": 1,
+        "rouge_l_f1": 0.5384615384615385,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5
+      },
+      "pipeline_b": {
+        "prediction": "RANKL (Receptor activator of nuclear factor-\u03baB ligand)",
+        "retrieved_pmcids": [
+          "PMC4507456",
+          "PMC4507456",
+          "PMC4507456",
+          "PMC4507456",
+          "PMC4610882"
+        ],
+        "retrieval_latency": 0.28694987297058105,
+        "llm_latency": 10.071051836013794,
+        "exact_match": 1,
+        "rouge_l_f1": 0.5384615384615385,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What is the association of spermidine with \u03b1-synuclein neurotoxicity?",
+      "exact_answer": [
+        "Spermidine protects against \u03b1-synuclein neurotoxicity"
+      ],
+      "gold_pmcids": [
+        "PMC4614020"
+      ],
+      "pipeline_a": {
+        "prediction": "Spermidine protects against \u03b1-synuclein neurotoxicity.",
+        "retrieved_pmcids": [
+          "PMC4614020",
+          "PMC4614020",
+          "PMC4614020",
+          "PMC4614020",
+          "PMC4614020"
+        ],
+        "retrieval_latency": 0.007323265075683594,
+        "llm_latency": 12.486872911453247,
+        "exact_match": 1,
+        "rouge_l_f1": 0.10638297872340426,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Spermidine protects against \u03b1-synuclein neurotoxicity.",
+        "retrieved_pmcids": [
+          "PMC4614020",
+          "PMC4614020",
+          "PMC4614020",
+          "PMC4614020",
+          "PMC4614020"
+        ],
+        "retrieval_latency": 0.29246091842651367,
+        "llm_latency": 12.55265998840332,
+        "exact_match": 1,
+        "rouge_l_f1": 0.10638297872340426,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 1.0,
+        "recall_3": 1.0,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    },
+    {
+      "question": "What periodontal disease associated bacteria is also associated with Alzheimer's disease?",
+      "exact_answer": [
+        "Porphyromonas gingivalis"
+      ],
+      "gold_pmcids": [
+        "PMC5575416",
+        "PMC5652018"
+      ],
+      "pipeline_a": {
+        "prediction": "Porphyromonas gingivalis.",
+        "retrieved_pmcids": [
+          "PMC5575416",
+          "PMC5575416",
+          "PMC5652018",
+          "PMC5652018",
+          "PMC5652018"
+        ],
+        "retrieval_latency": 0.006305217742919922,
+        "llm_latency": 10.665596961975098,
+        "exact_match": 1,
+        "rouge_l_f1": 0.14285714285714288,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 1.0
+      },
+      "pipeline_b": {
+        "prediction": "Treponema denticola",
+        "retrieved_pmcids": [
+          "PMC5652018",
+          "PMC5652018",
+          "PMC5652018",
+          "PMC5652018",
+          "PMC5652018"
+        ],
+        "retrieval_latency": 0.31528306007385254,
+        "llm_latency": 10.004180908203125,
+        "exact_match": 0,
+        "rouge_l_f1": 0.1111111111111111,
+        "hit_rate_1": 1,
+        "hit_rate_3": 1,
+        "recall_1": 0.5,
+        "recall_3": 0.5,
+        "page_hit_rate": 1,
+        "page_recall": 1.0
+      }
+    }
+  ]
+}

@@ -1,4 +1,6 @@
-# Hybrid Visual–Lexical RAG Evaluation (BioASQ + PMC)
+# Does Visual Page Ranking Help When Your LLM Cannot See? Evaluating ColPali in a Text-Only RAG Stack
+
+## Hybrid Visual–Lexical RAG Evaluation (BioASQ + PMC)
 
 We evaluate a cost-constrained RAG scenario: a team with a text-only LLM, a standard layout-aware OCR tool, and a fixed-window chunking strategy wants to know whether adding ColPali as a visual page pre-filter is a smart investment — or whether the text pipeline alone is good enough.
 
