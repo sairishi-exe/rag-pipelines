@@ -39,7 +39,7 @@ def retrieve_pipeline_b(
     """
     ColPali pre-filters pages, then BM25 re-ranks the candidate chunks.
     Uses global_index to fetch only the needed chunks from SQLite.
-    Returns (chunks, page_hits) — page_hits exposed for page-level eval metrics.
+    Returns (chunks, page_hits). page_hits is used for page-level eval metrics.
     """
     # 1. Qdrant MaxSim: find top-P pages
     page_hits = query_pages(qdrant_client, query_embeddings, top_p)

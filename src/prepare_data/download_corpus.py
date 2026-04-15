@@ -47,14 +47,17 @@ def download_pdf(pmcid: str, file_path: str, out_dir: str) -> str:
 
 
 if __name__ == "__main__":
+    # load the filtered subset of PMCIDs to download
     subset = load_from_cache("document_id_subset")[0]
     pmcids = subset["pmcids"]
 
+    # map PMCIDs to their FTP download paths
     pdf_path_map = load_pdf_path_map(OA_PDF_CSV)
     os.makedirs(PDF_DIR, exist_ok=True)
 
     downloaded, existed, failed, missing = 0, 0, 0, 0
 
+    # download each PDF from PMC
     for pmcid in pmcids:
         file_path = pdf_path_map.get(pmcid)
         if not file_path:

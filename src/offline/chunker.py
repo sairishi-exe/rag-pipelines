@@ -59,14 +59,8 @@ def chunk_document(
     chunk_size: int,
     chunk_overlap: int,
 ) -> list[dict]:
-    """
-    Chunk a single document's pages into fixed-window overlapping chunks.
-
-    1. Flatten all words into one list, tracking which page each word came from.
-    2. Slide a window of chunk_size words with step = chunk_size - chunk_overlap.
-    3. Merge short tail if the last window adds fewer than MIN_TAIL_WORDS new words.
-    4. Return list of chunk records with metadata.
-    """
+    """Split a document's pages into fixed-window overlapping chunks.
+    Returns list of chunk dicts with text, page range, and source PMCID."""
     # step 1: flatten words and build page tracking array
     all_words = []
     word_page = []
@@ -90,7 +84,7 @@ def chunk_document(
             break
         start += step
 
-    # step 3: short tail merge
+    # if the last chunk is too short, combine it with the previous one
     if len(windows) >= 2:
         prev_start, prev_end = windows[-2]
         last_start, last_end = windows[-1]
@@ -114,7 +108,7 @@ def chunk_document(
     return chunks
 
 
-def snapshot_to_cache(chunks: list[dict]) -> str:
+def save_chunks_backup(chunks: list[dict]) -> str:
     """Write all chunks to a JSONL file in cache dir for manual inspection."""
     path = os.path.join(CACHE_DIR, "chunks.jsonl")
     os.makedirs(CACHE_DIR, exist_ok=True)
@@ -145,20 +139,20 @@ def main():
         print("No OCR output found. Run OCR first.")
         return
 
-    # Step 2: idempotency check (uses SQLite as source of truth)
+    # Step 2: skip if all documents are already chunked
     if is_already_chunked(pmcids):
         print(f"Chunking already complete (SQLite covers all {len(pmcids)} documents). Skipping.")
         return
 
     # Step 3: wipe and prepare DB for fresh insert
-    # on partial failure, idempotency check will detect missing PMCIDs and re-run
+    # on partial failure, the skip check above will detect missing PMCIDs and re-run
     init_db()
     conn = sqlite3.connect(DB_PATH)
     conn.execute("DELETE FROM chunks")
     conn.commit()
 
     processed, failed, total_chunks = 0, 0, 0
-    global_offset = 0  # tracks next global_index across documents (doc1: 0-15, doc2: 16-34, ...)
+    global_offset = 0  # tracks next global_index across documents (doc1: 0-15, doc2: 16-34, etc)
     all_chunks_for_jsonl = []  # accumulate for JSONL backup only
 
     # Step 4: chunk each document and insert to DB immediately (no large in-memory list for DB)
@@ -185,11 +179,11 @@ def main():
 
     conn.close()
 
-    cache_path = snapshot_to_cache(all_chunks_for_jsonl)
+    cache_path = save_chunks_backup(all_chunks_for_jsonl)
 
     print(f"\nChunked: {processed}  |  Failed: {failed}")
     print(f"Total chunks: {total_chunks}  |  SQLite: {DB_PATH}")
-    print(f"JSONL snapshot: {cache_path}")
+    print(f"JSONL backup: {cache_path}")
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ def init_model() -> tuple[ColPaliForRetrieval, ColPaliProcessor]:
 
 
 def embed_page(model, processor, image_path: str) -> list[list[float]]:
-    """Full multi-vector for a page image — (num_patches, 128)."""
+    """Returns the full multi-vector embedding for a page image. Shape: (num_patches, 128)."""
     device = next(model.parameters()).device
     image = Image.open(image_path).convert("RGB")
     inputs = processor(images=[image], return_tensors="pt").to(device)
@@ -33,7 +33,7 @@ def embed_page(model, processor, image_path: str) -> list[list[float]]:
 
 
 def embed_query(model, processor, query: str) -> list[list[float]]:
-    """Full multi-vector for a text query — (num_tokens, 128)."""
+    """Returns the full multi-vector embedding for a text query. Shape: (num_tokens, 128)."""
     device = next(model.parameters()).device
     inputs = processor(text=[query], return_tensors="pt", padding=True).to(device)
 
@@ -75,10 +75,12 @@ def embed_document(model, processor, client, pmcid, pages) -> int:
 
 
 def main():
+    # load ColPali model and connect to Qdrant
     model, processor = init_model()
     client = get_client()
     init_collection(client)
 
+    # get all document image directories
     pmcids = get_image_dirs(IMAGES_DIR)
     if not pmcids:
         print("No images found. Run pdf_to_images first.")
@@ -87,6 +89,7 @@ def main():
     embedded, skipped, failed = 0, 0, 0
     total_pages, total_time = 0, 0.0
 
+    # embed each document's pages and store in Qdrant
     for i, pmcid in enumerate(pmcids, 1):
         pages = get_page_images(IMAGES_DIR, pmcid)
 

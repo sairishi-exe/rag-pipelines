@@ -2,7 +2,6 @@ import csv
 import json
 import os
 import time
-
 import requests
 
 from src.config import CACHE_DIR, CONTEXT_TOP_K, DB_PATH, EVAL_DIR, TOP_P_PAGES
@@ -26,10 +25,10 @@ def load_qa_dataset(path: str) -> list[dict]:
         return [json.loads(line) for line in f]
 
 
-### Preflight checks
+### Setup verification
 
-def preflight_checks():
-    """Verify all services and data are available before running eval."""
+def verify_setup():
+    """Make sure BM25 index, SQLite, Ollama, and Qdrant are all available."""
     errors = []
 
     # BM25 index
@@ -40,13 +39,13 @@ def preflight_checks():
     if not os.path.isfile(DB_PATH):
         errors.append(f"SQLite DB not found: {DB_PATH}")
 
-    # Ollama — LLM server runs on port 11434, ping its version endpoint as health check
+    # Ollama (LLM server on port 11434)
     try:
         requests.get("http://localhost:11434/api/version", timeout=3)
     except Exception:
         errors.append("Ollama not reachable at localhost:11434")
 
-    # Qdrant — vector DB runs on port 6333 (Docker), list collections as health check
+    # Qdrant (vector DB on port 6333)
     try:
         client = get_client()
         client.get_collections()
@@ -54,7 +53,7 @@ def preflight_checks():
         errors.append("Qdrant not reachable at localhost:6333")
 
     if errors:
-        print("Preflight check failed:")
+        print("Setup check failed:")
         for e in errors:
             print(f"  - {e}")
         return False
@@ -148,13 +147,13 @@ def save_json(results_a, results_b, per_question, path):
     print(f"JSON saved: {path}")
 
 
-### Main
-# Pipelines run separately (not interleaved) to avoid LLM warm/cold variance.
+### Main Run
+# Pipelines run separately to avoid LLM warm/cold variance.
 # Pipeline A runs all questions first, then Pipeline B runs all questions.
 
 def main():
-    # preflight
-    if not preflight_checks():
+    # verify setup
+    if not verify_setup():
         return
 
     # load QA dataset
@@ -177,12 +176,10 @@ def main():
                  "ret_lat": [], "llm_lat": [], "page_hr": [], "page_r": []}
     a_predictions, b_predictions = [], []
 
-    # ══════════════════════════════════════════════════════════════
-    # Pipeline A: BM25 over full corpus
-    # ══════════════════════════════════════════════════════════════
+    # --- Pipeline A: BM25 over full corpus ---
     print("Loading BM25 index...")
     bm25 = load_index()
-    print(f"\n── Pipeline A (BM25 only) ── {n} questions\n")
+    print(f"\n--- Pipeline A (BM25 only) --- {n} questions\n")
 
     for i, qa in enumerate(qa_dataset, 1):
         query = qa["body"]
@@ -219,14 +216,12 @@ def main():
             "recall_3": a_metrics["r3"][-1],
         }
 
-    # ══════════════════════════════════════════════════════════════
-    # Pipeline B: ColPali pre-filter → BM25 re-rank
+    # --- Pipeline B: ColPali pre-filter + BM25 re-rank ---
     # Load ColPali model only when needed (frees memory during Pipeline A)
-    # ══════════════════════════════════════════════════════════════
     print("\nLoading ColPali model + Qdrant client...")
     model, processor = init_model()
     qdrant_client = get_client()
-    print(f"\n── Pipeline B (ColPali + BM25) ── {n} questions\n")
+    print(f"\n--- Pipeline B (ColPali + BM25) --- {n} questions\n")
 
     for i, qa in enumerate(qa_dataset, 1):
         query = qa["body"]
@@ -270,10 +265,8 @@ def main():
             "page_recall": b_metrics["page_r"][-1],
         }
 
-    # ══════════════════════════════════════════════════════════════
-    # BERTScore + aggregation + output
-    # ══════════════════════════════════════════════════════════════
-    # BERTScore computed after both pipelines in one batch (runs BERT inference — batching is faster)
+    # --- BERTScore + aggregation + output ---
+    # BERTScore computed after both pipelines in one batch for efficiency
     print("\nComputing BERTScore...")
     a_bert = bert_score(a_predictions, all_ideal_answers)
     b_bert = bert_score(b_predictions, all_ideal_answers)

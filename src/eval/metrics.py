@@ -10,7 +10,7 @@ _scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=True)
 
 def exact_match(prediction: str, exact_answers: list[str]) -> int:
     """
-    1 if prediction contains any of the exact answers (case-insensitive), else 0.
+    Returns 1 if prediction contains any of the exact answers (case-insensitive), else 0.
     """
     pred_lower = prediction.lower()
     return int(any(ans.lower() in pred_lower for ans in exact_answers))
@@ -18,9 +18,9 @@ def exact_match(prediction: str, exact_answers: list[str]) -> int:
 
 def rouge_l(prediction: str, ideal_answers: list[str] | str) -> dict:
     """
-    ROUGE-L: measures word-level overlap using longest common subsequence (LCS).
-             Captures word ordering without requiring consecutive matches.
-    Returns dict with precision, recall, and f1 (F1 combines both — primary metric).
+    Score prediction against ideal answer(s) using ROUGE-L. 
+
+    Returns best {precision, recall, f1}.
     """
     if isinstance(ideal_answers, str):
         ideal_answers = [ideal_answers]
@@ -33,21 +33,13 @@ def rouge_l(prediction: str, ideal_answers: list[str] | str) -> dict:
 
 def bert_score(predictions: list[str], ideal_answers: list[list[str] | str]) -> list[dict]:
     """
-    BERTScore: measures semantic similarity using contextual embeddings (RoBERTa-large).
-               Captures meaning-level matches that word overlap misses (e.g. "FTY720" ≈ "Fingolimod").
+    Score all predictions against ideal answers using BERTScore.
+    For questions with multiple ideal answers, takes the max F1.
 
-    Returns list of dicts with precision, recall, and f1 
-    (F1 is the primary metric that combines both precision and recall).
-    For questions with multiple ideal answers, scores against each and takes the max by F1.
+    Returns list of {precision, recall, f1} dicts.
     """
-    # bert_score_fn expects two equal-length lists and scores them pairwise
-    # (index 0 vs index 0, index 1 vs index 1, etc.)
-    # so if a question has 2 ideal variants, we repeat the prediction twice:
-    #   preds_repeated = ["FTY720 is the drug",  "FTY720 is the drug"]
-    #   ideal           = ["Fingolimod is the drug", "FTY720 is the drug"]
-    #
-    # all pairs are flattened into a single batched call to avoid repeated model
-    # loading overhead, then regrouped per question to take the max F1.
+    # flatten all (prediction, ideal) pairs so we can score them in one batch call
+    # questions with multiple ideal answers get repeated predictions
     all_preds = []
     all_refs = []
     group_sizes = []
@@ -58,9 +50,7 @@ def bert_score(predictions: list[str], ideal_answers: list[list[str] | str]) -> 
         all_refs.extend(ideal)
         group_sizes.append(len(ideal))
 
-    # returns (Precision, Recall, F1) — each a tensor with one value per pair
-    # e.g. F1 = tensor([0.90, 1.00]) for 2 ideal variants
-    # F1 combines precision and recall — primary metric
+    # returns (Precision, Recall, F1) tensors, one value per pair
     P, R, F1 = bert_score_fn(all_preds, all_refs, lang="en", verbose=False)
 
     # regroup by question and take the best-scoring variant (by F1)
@@ -82,21 +72,13 @@ def bert_score(predictions: list[str], ideal_answers: list[list[str] | str]) -> 
 ### Retrieval quality metrics
 
 def hit_rate_at_k(retrieved_pmcids: list[str], gold_pmcids: list[str], k: int) -> int:
-    """
-    Hit Rate@K: did at least one gold PMCID appear in the top-K retrieved chunks?
-
-    Returns 1 if yes, 0 if no. Evaluated at K=1 and K=3.
-    """
+    """Returns 1 if any gold PMCID appears in the top-K retrieved chunks, else 0."""
     top_k = set(retrieved_pmcids[:k])
     return int(bool(top_k & set(gold_pmcids)))
 
 
 def recall_at_k(retrieved_pmcids: list[str], gold_pmcids: list[str], k: int) -> float:
-    """
-    Recall@K: what fraction of gold PMCIDs were found in the top-K retrieved chunks?
-    
-    Returns 0.0–1.0. Evaluated at K=1 and K=3.
-    """
+    """Returns fraction of gold PMCIDs found in the top-K retrieved chunks."""
     top_k = set(retrieved_pmcids[:k])
     found = len(top_k & set(gold_pmcids))
     return found / len(gold_pmcids)
@@ -105,22 +87,13 @@ def recall_at_k(retrieved_pmcids: list[str], gold_pmcids: list[str], k: int) -> 
 ### Page-level retrieval metrics (Pipeline B ColPali analysis)
 
 def page_hit_rate(page_hits: list[dict], gold_pmcids: list[str]) -> int:
-    """
-    Answers: Did ColPali's top-P pages include at least one page from a gold PMCID?
-    page_hits: list of {"pmcid": ..., "page_num": ..., "score": ...} from Qdrant.
-
-    Returns 1 if yes, 0 if no.
-    """
+    """Returns 1 if ColPali's top-P pages include at least one gold PMCID, else 0."""
     retrieved_pmcids = {h["pmcid"] for h in page_hits}
     return int(bool(retrieved_pmcids & set(gold_pmcids)))
 
 
 def page_recall(page_hits: list[dict], gold_pmcids: list[str]) -> float:
-    """
-    Answers: What fraction of gold PMCIDs appear in ColPali's top-P pages?
-    
-    Returns 0.0–1.0.
-    """
+    """Returns fraction of gold PMCIDs that appear in ColPali's top-P pages."""
     retrieved_pmcids = {h["pmcid"] for h in page_hits}
     found = len(retrieved_pmcids & set(gold_pmcids))
     return found / len(gold_pmcids)

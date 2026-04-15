@@ -24,15 +24,10 @@ def init_db():
 
 
 def fetch_chunks_by_positions(positions: list[int]) -> list[dict]:
-    """Fetch chunks from SQLite by their global_index values.
-
-    Uses parameterized IN (...) query — SQLite requires one '?' placeholder
-    per value to prevent SQL injection, so we build the placeholder string
-    dynamically based on the number of positions requested.
-    """
+    """Fetch chunks from SQLite by their global_index values."""
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # allows dict-like access on rows
-    qmarks = ",".join("?" for _ in positions) # SQL injection prevention (prod-like purposes)
+    conn.row_factory = sqlite3.Row
+    qmarks = ",".join("?" for _ in positions)
     rows = conn.execute(
         f"SELECT * FROM chunks WHERE global_index IN ({qmarks})", positions
     ).fetchall()

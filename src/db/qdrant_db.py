@@ -35,7 +35,7 @@ def init_collection(client: QdrantClient) -> None:
 
 
 def _point_id(pmcid: str, page_num: int) -> str:
-    """Deterministic UUID per page — makes upserts idempotent."""
+    """Generate a consistent UUID for a given page so re-runs don't create duplicates."""
     return str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{pmcid}:p{page_num:04d}"))
 
 
@@ -74,7 +74,7 @@ def query_pages(
     query_embeddings: list[list[float]],
     top_p: int,
 ) -> list[dict]:
-    """MaxSim search — Qdrant computes token-level max similarities internally."""
+    """Search Qdrant for the top-P most relevant pages using MaxSim."""
     results = client.query_points(
         collection_name=QDRANT_COLLECTION,
         query=query_embeddings,

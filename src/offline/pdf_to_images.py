@@ -43,6 +43,7 @@ def convert_pdf_to_images(pdf_path: str, out_dir: str, dpi: int = DPI) -> int:
     """
     Convert a single PDF to per-page PNGs.
     Clears any existing partial output before converting to avoid stale files.
+    
     Returns the number of pages converted, or 0 on failure.
     """
     # clear any partial output from a previous interrupted run
@@ -73,13 +74,13 @@ def main():
     os.makedirs(IMAGES_DIR, exist_ok=True)
 
     converted, skipped, failed = 0, 0, 0
-    page_counts = {}  # {pmcid: num_pages} manifest for downstream use
+    page_counts = {}  # {pmcid: num_pages} list for downstream use
 
     # Step 2: convert each PDF to per-page PNGs
     for i, pdf_path in enumerate(pdf_paths, 1):
         pmcid = os.path.splitext(os.path.basename(pdf_path))[0]
 
-        # skip PDFs that have already been fully converted (idempotent)
+        # skip PDFs that have already been fully converted
         if is_already_converted(pdf_path, pmcid, IMAGES_DIR):
             skipped += 1
             existing_dir = os.path.join(IMAGES_DIR, pmcid)

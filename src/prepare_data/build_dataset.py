@@ -25,7 +25,7 @@ def load_factoid_data(path: str = RAW_DATA_PATH) -> pd.DataFrame:
     factoids = [q for q in data['questions'] if q['type'] == 'factoid']
 
     df = pd.DataFrame(factoids)[['id', 'body', 'exact_answer', 'ideal_answer', 'documents']]
-    # document URLs are PubMed links — extract the trailing PMID
+    # document URLs are PubMed links, extract the trailing PMID
     df['pmids'] = df['documents'].apply(lambda docs: [d.split('/')[-1] for d in docs])
     df = df.drop(columns=['documents'])
 
@@ -64,7 +64,7 @@ def pmids_to_pmcids(pmids: list[str], verbose: bool = False) -> dict[str, str]:
         for record in records:
             pmid = record.get("pmid")
             pmcid = record.get("pmcid")
-            # pmid comes back as int from the API — convert to str for consistent keys
+            # pmid comes back as int from the API, convert to str for consistent keys
             if pmid and pmcid:
                 mapping[str(pmid)] = pmcid
 

@@ -16,8 +16,9 @@ def load_pdf_pmcids(csv_path: str) -> set:
 def compute_qa_stats(df: pd.DataFrame, pdf_pmcids: set) -> pd.DataFrame:
     """
     Adds two columns:
-      pmcid_oa  — subset of pmcids that have a downloadable PDF
-      oa_ratio  — len(pmcid_oa) / len(pmids)
+      pmcid_oa: subset of pmcids that have a downloadable PDF
+      oa_ratio: len(pmcid_oa) / len(pmids)
+      
     Returns df sorted by oa_ratio descending.
     """
     df["pmcid_oa"] = df["pmcids"].apply(
@@ -33,14 +34,10 @@ def compute_qa_stats(df: pd.DataFrame, pdf_pmcids: set) -> pd.DataFrame:
 def select_subset(
     df: pd.DataFrame, target_articles: int = TARGET_ARTICLES, min_oa_ratio: float = 0.5
 ) -> tuple[pd.DataFrame, set]:
-    """
-    Pre-filters to rows with oa_ratio >= min_oa_ratio, then runs a two-pass selection:
-      Pass 1 — walk the filtered df accumulating unique pmcid_oa until target_articles is reached.
-               This determines the downloadable PDF corpus.
-      Pass 2 — include any row whose pmcid_oa are fully covered by that corpus.
-               These rows are free — no extra documents needed.
-    Returns (filtered_df, unique_pmcids).
-    """
+    """Select a subset of QA pairs and their associated documents.
+    First pass collects unique PMCIDs until we hit the target count.
+    Second pass includes any remaining rows already covered by those documents.
+    Returns (filtered_df, unique_pmcids)."""
     candidates = df[df["oa_ratio"] >= min_oa_ratio]
 
     # pass 1: build the corpus from downloadable PDFs only
@@ -54,7 +51,7 @@ def select_subset(
             break
 
     # pass 2: include all rows whose pmcid_oa are fully covered by the corpus
-    # row["pmcid_oa"] must be non-empty to avoid vacuous truth on empty lists
+    # row["pmcid_oa"] must be non-empty (empty list would pass the all() check)
     selected_rows = [
         row for _, row in candidates.iterrows()
         if row["pmcid_oa"] and all(p in unique_pmcids for p in row["pmcid_oa"])
@@ -64,14 +61,19 @@ def select_subset(
 
 
 if __name__ == "__main__":
+    # load full dataset from previous build step
     df, document_id_map = load_from_cache("dataframe_cache", "document_id_map")
 
+    # load list of PMCIDs that have downloadable PDFs
     pdf_pmcids = load_pdf_pmcids(OA_PDF_CSV)
 
+    # add OA ratio columns to each question
     df = compute_qa_stats(df, pdf_pmcids)
 
+    # select subset of questions and documents
     df, unique_pmcids = select_subset(df, target_articles=TARGET_ARTICLES)
 
+    # save filtered dataset to cache
     cache_data(
         dataframe_subset_cache=df,
         document_id_subset={"pmcids": list(unique_pmcids)},

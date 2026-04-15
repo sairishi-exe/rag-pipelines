@@ -6,9 +6,7 @@ from paddleocr import PaddleOCR
 
 from src.config import IMAGES_DIR, OCR_DIR, VERBOSE
 
-# abort if process memory exceeds this (in GB)
-# NOTE: changed from 20GB to 14GB so that smaller RAM machines can run the script
-# NOTE: Course staff can change according to their machine's RAM
+# stop if memory usage exceeds this limit (in GB), adjust based on your machine
 MAX_MEMORY_GB = 14
 
 
@@ -19,8 +17,7 @@ def init_ocr() -> PaddleOCR:
         use_doc_orientation_classify=False,  # not needed for digital PDF renders
         use_doc_unwarping=False,             # not needed for digital PDF renders
         use_textline_orientation=False,      # not needed for digital PDF renders
-        # currently not using the server version tthat is larger, more parameters, higher accyracy
-        # since using clean 300 DPI images, mobile should be as good as server
+        # mobile model is good enough for clean 300 DPI images, no need for the heavier server version
         text_detection_model_name='PP-OCRv5_mobile_det',  # lighter model, sufficient for clean PDFs
     )
 
@@ -109,7 +106,7 @@ def ocr_document(ocr_engine: PaddleOCR, image_dir: str, out_dir: str) -> int:
         text = ocr_page(ocr_engine, image_path)
 
         # save text file with same name as image but .txt extension
-        # write even if empty so the count check works for idempotency
+        # write even if empty so the skip check counts match
         txt_name = page_file.replace(".png", ".txt")
         try:
             with open(os.path.join(out_dir, txt_name), "w") as f:
