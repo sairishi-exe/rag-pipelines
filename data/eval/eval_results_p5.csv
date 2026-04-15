@@ -1,0 +1,13 @@
+Metric,Pipeline A (BM25 only),Pipeline B (ColPali + BM25)
+Exact Match,68.1%,66.7%
+ROUGE-L (F1),0.262,0.269
+BERTScore (F1),0.863,0.861
+Hit Rate@1,91.3%,98.6%
+Hit Rate@3,95.7%,98.6%
+Recall@1,0.769,0.825
+Recall@3,0.863,0.873
+Retrieval Latency (s),0.01,0.34
+LLM Latency (s),11.1,11.2
+Total Latency (s),11.1,11.5
+Page Hit Rate,—,100.0%
+Page Recall,—,0.960
