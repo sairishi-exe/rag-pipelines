@@ -1,4 +1,4 @@
-# Does Visual Page Ranking Help When Your LLM Cannot See? Evaluating ColPali in a Text-Only RAG Stack
+# Does Visual Page Filtering Help a Text-Only RAG Pipeline? Evaluating ColPali in a Cost-Constrained Biomedical Setting
 
 ## Hybrid Visual–Lexical RAG Evaluation (BioASQ + PMC)
 
