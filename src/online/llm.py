@@ -25,6 +25,7 @@ def generate_answer(prompt: str) -> str:
         "model": OLLAMA_MODEL,
         "prompt": prompt,
         "stream": False,
+        "options": {"seed": 42},
     })
     response.raise_for_status()
     return response.json()["response"].strip()

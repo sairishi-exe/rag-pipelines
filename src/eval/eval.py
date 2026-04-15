@@ -353,8 +353,8 @@ def main():
 
     # output results in three formats: terminal table, CSV (for Google Sheets), JSON (for re-analysis)
     print_table(results_a, results_b, n)
-    save_csv(results_a, results_b, os.path.join(EVAL_DIR, "eval_results.csv"))
-    save_json(results_a, results_b, per_question, os.path.join(EVAL_DIR, "eval_results.json"))
+    save_csv(results_a, results_b, os.path.join(EVAL_DIR, f"eval_results_p{TOP_P_PAGES}.csv"))
+    save_json(results_a, results_b, per_question, os.path.join(EVAL_DIR, f"eval_results_p{TOP_P_PAGES}.json"))
 
 
 if __name__ == "__main__":

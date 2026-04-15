@@ -26,7 +26,9 @@ COLPALI_DIM = 128
 
 # Retrieval
 CONTEXT_TOP_K = 5
-TOP_P_PAGES = 20  # ColPali page candidates for Pipeline B
+# TOP_P_PAGES = 5   # ColPali page candidates for Pipeline B (variant 1)
+# TOP_P_PAGES = 10  # ColPali page candidates for Pipeline B (variant 2)
+TOP_P_PAGES = 20  # ColPali page candidates for Pipeline B (default)
 
 # LLM
 OLLAMA_MODEL = "llama3.1:8b"
